@@ -94,17 +94,11 @@
                 linear-gradient(90deg, rgba(0,245,255,0.025) 1px, transparent 1px);
             background-size: 48px 48px;
         }
-        [data-theme="light"] .bg-grid {
-            background-image:
-                linear-gradient(rgba(0,100,180,0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,100,180,0.04) 1px, transparent 1px);
-        }
 
         .orb {
             position: fixed; border-radius: 50%;
             filter: blur(60px); pointer-events: none; z-index: -1;
             animation: orbFloat linear infinite;
-            will-change: transform;
         }
         .orb1 { width: 300px; height: 300px; background: rgba(0,245,255,0.04); top: 10%; left: -5%; animation-duration: 25s; }
         .orb2 { width: 200px; height: 200px; background: rgba(123,47,255,0.05); bottom: 15%; right: -3%; animation-duration: 20s; animation-delay: -8s; }
@@ -116,31 +110,22 @@
             75%  { transform: translateY(-25px) translateX(5px); }
             100% { transform: translateY(0px) translateX(0px); }
         }
-        [data-theme="light"] .orb { opacity: 0.3; }
 
         .scan-line {
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px);
         }
-        [data-theme="light"] .scan-line { display: none; }
 
         .sweep-text {
-            position: relative;
-            display: inline-block;
+            position: relative; display: inline-block;
             background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
         .sweep-text::after {
-            content: attr(data-text);
-            position: absolute; inset: 0;
+            content: attr(data-text); position: absolute; inset: 0;
             background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.55) 50%, transparent 80%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 100%;
-            animation: lightSweepBounce 3.5s ease-in-out infinite;
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 300% 100%; animation: lightSweepBounce 3.5s ease-in-out infinite;
         }
         @keyframes lightSweepBounce {
             0%   { background-position: 0% 0; }
@@ -172,7 +157,6 @@
             background: rgba(4,6,8,0.96); border-left: 1px solid var(--border-accent);
             backdrop-filter: blur(40px); z-index: 3000; transition: right 0.45s cubic-bezier(0.4,0,0.2,1); overflow-y: auto;
         }
-        [data-theme="light"] .settings-panel { background: rgba(245,247,250,0.97); }
         .settings-panel.on { right: 0; }
         .drawer-head {
             position: sticky; top: 0;
@@ -202,13 +186,13 @@
         .sw input:checked + .sw-slider { background: linear-gradient(135deg, var(--accent), var(--accent2)); border-color: var(--accent); }
         .sw input:checked + .sw-slider::before { transform: translateX(22px); }
         .color-row { display: flex; gap: 8px; flex-wrap: wrap; }
-        .clr { width: 36px; height: 36px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); }
+        .clr { width: 36px; height: 36px; border-radius: 10px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s; }
         .clr:hover { transform: scale(1.15); }
         .clr.on { border-color: white; box-shadow: 0 0 16px rgba(255,255,255,0.3); }
         .layout-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
         .layout-opt {
             padding: 10px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border);
-            color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center; transition: all 0.2s;
+            color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; text-align: center;
         }
         .layout-opt:hover { border-color: var(--accent); color: var(--accent); }
         .layout-opt.on { border-color: var(--accent); color: var(--accent); background: rgba(0,245,255,0.08); }
@@ -216,84 +200,45 @@
             width: 100%; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border);
             border-radius: 10px; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; outline: none; cursor: pointer;
         }
-        .sort-select:focus { border-color: var(--accent); }
 
         #auth-page {
-            display: none;
-            position: fixed; inset: 0; z-index: 8000;
-            align-items: center; justify-content: center;
-            background: var(--bg);
-            flex-direction: column; gap: 28px;
-            animation: fadeIn 0.4s ease both;
+            display: none; position: fixed; inset: 0; z-index: 8000;
+            align-items: center; justify-content: center; background: var(--bg);
+            flex-direction: column; gap: 28px; animation: fadeIn 0.4s ease both;
         }
         #auth-page.on { display: flex; }
-        @keyframes fadeIn  { from{opacity:0} to{opacity:1} }
+        @keyframes fadeIn { from{opacity:0} to{opacity:1} }
         @keyframes fadeOut { from{opacity:1} to{opacity:0} }
         #auth-page.leaving { animation: fadeOut 0.5s ease forwards; }
 
-        .auth-brand {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3rem, 10vw, 5rem);
-            letter-spacing: -1px; line-height: 1;
-        }
-
-        .auth-status {
-            display: flex; flex-direction: column; align-items: center; gap: 14px;
-        }
-
-        .auth-label {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(0.7rem, 2vw, 0.85rem);
-            font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
-        }
-
-        .auth-bar {
-            width: 180px; height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;
-        }
-        .auth-bar-fill {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            border-radius: 2px;
-            transition: width 0.4s ease;
-        }
-
-        .auth-sub {
-            font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--text-muted); margin-top: 4px;
-        }
-
+        .auth-brand { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 10vw, 5rem); letter-spacing: -1px; line-height: 1; }
+        .auth-status { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .auth-label { font-family: 'Orbitron', sans-serif; font-size: clamp(0.7rem, 2vw, 0.85rem); font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
+        .auth-bar { width: 180px; height: 2px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+        .auth-bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.4s ease; }
+        .auth-sub { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
         .auth-dots { display: flex; gap: 6px; }
-        .auth-dot {
-            width: 5px; height: 5px; border-radius: 50%;
-            background: var(--accent); opacity: 0.3;
-            animation: dotPulse 1.4s ease-in-out infinite;
-        }
+        .auth-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: 0.3; animation: dotPulse 1.4s ease-in-out infinite; }
         .auth-dot:nth-child(2) { animation-delay: 0.2s; }
         .auth-dot:nth-child(3) { animation-delay: 0.4s; }
         @keyframes dotPulse { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
 
-        #login-page {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            padding: 24px; position: relative;
-        }
+        #login-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; position: relative; }
         .login-container { width: min(440px, 100%); }
         .login-brand { text-align: center; margin-bottom: 40px; }
 
         .brand-mark {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(5rem, 15vw, 7rem); letter-spacing: -2px; line-height: 0.85;
+            font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 15vw, 7rem); letter-spacing: -2px; line-height: 0.85;
             position: relative; display: inline-block;
             background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             filter: drop-shadow(0 0 30px rgba(0,245,255,0.3));
         }
         .brand-mark::after {
-            content: 'P3TO';
-            position: absolute; inset: 0;
+            content: 'P3TO'; position: absolute; inset: 0;
             background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 50%, transparent 80%);
             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 300% 100%;
-            animation: lightSweepBounce 3.5s ease-in-out infinite;
+            background-size: 300% 100%; animation: lightSweepBounce 3.5s ease-in-out infinite;
         }
 
         .brand-sub { font-family: 'Orbitron', sans-serif; font-size: 0.55rem; letter-spacing: 5px; text-transform: uppercase; color: var(--text-muted); margin-top: 6px; }
@@ -311,43 +256,32 @@
             border-radius: 24px; padding: 32px; backdrop-filter: blur(30px);
             position: relative; overflow: hidden; animation: fadeUp 0.6s ease both;
         }
-        .login-card::before {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-        .login-card::after {
-            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(123,47,255,0.5), transparent);
-        }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .login-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
+        .login-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(123,47,255,0.5), transparent); }
 
         .field-wrap { position: relative; margin-bottom: 14px; }
         .field-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 0.78rem; color: var(--text-muted); pointer-events: none; }
         .login-field {
             width: 100%; padding: 13px 14px 13px 40px;
             background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px;
-            color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none; transition: all 0.3s;
+            color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none;
         }
-        [data-theme="light"] .login-field { background: rgba(0,0,0,0.04); }
         .login-field:focus { border-color: var(--accent); background: rgba(0,245,255,0.04); }
-        .login-field::placeholder { color: var(--text-muted); }
-        .pw-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); cursor: pointer; font-size: 0.82rem; transition: color 0.2s; }
+        .pw-toggle { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); cursor: pointer; }
         .pw-toggle:hover { color: var(--accent); }
         .login-btn {
             width: 100%; padding: 14px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
             color: var(--bg); border: none; border-radius: 12px;
             font-family: 'Orbitron', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 3px;
-            cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+            cursor: pointer;
         }
         .login-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,245,255,0.3); filter: brightness(1.1); }
-        .login-btn:active { transform: translateY(0); }
-        .login-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .login-msg {
-            margin-top: 12px; padding: 11px 14px; border-radius: 10px;
-            font-size: 0.8rem; display: none; align-items: center; gap: 8px;
-        }
-        .login-msg.err  { display: flex; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
-        .login-msg.ok   { display: flex; background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25); color: var(--accent); }
+        .login-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .login-msg { margin-top: 12px; padding: 11px 14px; border-radius: 10px; font-size: 0.8rem; display: none; align-items: center; gap: 8px; }
+        .login-msg.err { display: flex; background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #fca5a5; }
+        .login-msg.ok { display: flex; background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25); color: var(--accent); }
         .login-msg.load { display: flex; background: rgba(0,128,255,0.08); border: 1px solid rgba(0,128,255,0.25); color: #60a5fa; }
         .spin { width: 14px; height: 14px; border: 2px solid rgba(0,245,255,0.3); border-top-color: var(--accent); border-radius: 50%; animation: rot 0.7s linear infinite; flex-shrink: 0; }
         @keyframes rot { to { transform: rotate(360deg); } }
@@ -362,7 +296,6 @@
             position: sticky; top: 16px; z-index: 900; gap: 12px; flex-wrap: wrap;
         }
         .nav-brand { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-
         .nav-logo {
             font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 1px;
             background: linear-gradient(135deg, var(--accent), var(--accent2));
@@ -370,78 +303,40 @@
             line-height: 1; position: relative; display: inline-block;
         }
         .nav-logo::after {
-            content: 'P3TO';
-            position: absolute; inset: 0;
+            content: 'P3TO'; position: absolute; inset: 0;
             background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 50%, transparent 80%);
             -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 300% 100%;
-            animation: lightSweepBounce 4s ease-in-out infinite;
-            animation-delay: 1s;
+            background-size: 300% 100%; animation: lightSweepBounce 4s ease-in-out infinite; animation-delay: 1s;
         }
-
         .nav-sep { width: 1px; height: 24px; background: var(--border); }
         .nav-user { font-size: 0.8rem; font-weight: 600; color: var(--text); }
-        .nav-role {
-            display: inline-block; padding: 2px 8px; border-radius: 6px;
-            font-size: 0.58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-            background: rgba(0,245,255,0.1); border: 1px solid rgba(0,245,255,0.2); color: var(--accent); margin-top: 2px;
-        }
+        .nav-role { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 0.58rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(0,245,255,0.1); border: 1px solid rgba(0,245,255,0.2); color: var(--accent); margin-top: 2px; }
         .nav-role.admin { background: rgba(123,47,255,0.15); border-color: rgba(123,47,255,0.3); color: #a78bfa; }
-        .nav-role.dev   { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.25); color: #fca5a5; }
-
+        .nav-role.dev { background: rgba(239,68,68,0.12); border-color: rgba(239,68,68,0.25); color: #fca5a5; }
         .nav-right { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .nbtn {
-            display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px;
-            background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
-            font-size: 0.73rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
-        }
+        .nbtn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.73rem; font-weight: 600; cursor: pointer; }
         .nbtn:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,245,255,0.06); }
         .nbtn.red:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.07); }
 
         .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 20px; }
-        .search-box {
-            flex: 1; min-width: 200px;
-            display: flex; align-items: center; gap: 10px;
-            background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0 14px; transition: border-color 0.3s;
-        }
+        .search-box { flex: 1; min-width: 200px; display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 0 14px; }
         .search-box:focus-within { border-color: var(--accent); }
-        .search-box i { color: var(--text-muted); font-size: 0.82rem; }
-        .search-box input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.85rem; padding: 11px 0; }
-        .search-box input::placeholder { color: var(--text-muted); }
-
-        .filter-btn {
-            display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 12px;
-            background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
-            font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif;
-            transition: all 0.2s; white-space: nowrap;
-        }
+        .search-box i { color: var(--text-muted); }
+        .search-box input { flex: 1; background: none; border: none; outline: none; color: var(--text); padding: 11px 0; }
+        .filter-btn { display: flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
         .filter-btn:hover, .filter-btn.on { border-color: var(--accent); color: var(--accent); background: rgba(0,245,255,0.07); }
 
-        .upload-panel {
-            background: var(--surface); border: 1px dashed var(--border-accent); border-radius: var(--radius);
-            padding: 16px 20px; display: flex; gap: 10px; align-items: center; margin-bottom: 20px; transition: border-color 0.3s; flex-wrap: wrap;
-        }
-        .upload-panel:focus-within { border-color: var(--accent); }
-        .upload-panel input { flex: 1; min-width: 150px; background: none; border: none; outline: none; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; }
-        .upload-panel input::placeholder { color: var(--text-muted); }
-        .upload-btn {
-            display: flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 11px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--bg); border: none;
-            font-family: 'Orbitron', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 2px;
-            cursor: pointer; white-space: nowrap; transition: all 0.2s;
-        }
+        .upload-panel { background: var(--surface); border: 1px dashed var(--border-accent); border-radius: var(--radius); padding: 16px 20px; display: flex; gap: 10px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .upload-panel input { flex: 1; min-width: 150px; background: none; border: none; outline: none; color: var(--text); }
+        .upload-btn { display: flex; align-items: center; gap: 7px; padding: 10px 18px; border-radius: 11px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: var(--bg); border: none; font-family: 'Orbitron', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 2px; cursor: pointer; white-space: nowrap; }
         .upload-btn:hover { filter: brightness(1.12); transform: translateY(-1px); box-shadow: 0 8px 20px rgba(0,245,255,0.25); }
 
         .stats-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 24px; }
         .stats-left { display: flex; flex-wrap: wrap; gap: 8px; }
         .stat-pill { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 7px 14px; font-size: 0.76rem; color: var(--text-muted); }
-        .stat-pill i { color: var(--accent); font-size: 0.78rem; }
+        .stat-pill i { color: var(--accent); }
         .stat-pill b { color: var(--text); font-weight: 600; }
-        .zip-btn {
-            display: flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 11px;
-            background: var(--surface); border: 1px solid var(--border); color: var(--text-muted);
-            font-size: 0.73rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
-        }
+        .zip-btn { display: flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 11px; background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.73rem; font-weight: 600; cursor: pointer; }
         .zip-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,245,255,0.07); box-shadow: var(--glow); }
 
         .gallery { display: grid; gap: 16px; }
@@ -453,147 +348,55 @@
             .gallery.grid-2 { grid-template-columns: 1fr; }
         }
 
-        .photo-card {
-            background: var(--surface); border: 1px solid var(--border);
-            border-radius: var(--radius); overflow: hidden; cursor: pointer; position: relative;
-            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); animation: fadeUp 0.4s ease both;
-        }
+        .photo-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; cursor: pointer; position: relative; transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); animation: fadeUp 0.4s ease both; }
         .photo-card:hover { transform: translateY(-6px); border-color: var(--border-accent); box-shadow: 0 20px 40px rgba(0,0,0,0.35), var(--glow); }
         .card-img { position: relative; overflow: hidden; }
-        .card-img img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); pointer-events: none; }
+        .card-img img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; transition: transform 0.5s; pointer-events: none; }
         .photo-card:hover .card-img img { transform: scale(1.07); }
-        .card-actions-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
-            opacity: 0; transition: opacity 0.3s;
-            display: flex; flex-direction: column; justify-content: flex-end; padding: 12px;
-        }
+        .card-actions-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%); opacity: 0; transition: opacity 0.3s; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; }
         .photo-card:hover .card-actions-overlay { opacity: 1; }
         .card-btns { display: flex; gap: 6px; }
-        .cbtn {
-            flex: 1; padding: 7px; border-radius: 8px;
-            background: rgba(255,255,255,0.12); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2); color: white;
-            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px;
-            cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
-            display: flex; align-items: center; justify-content: center; gap: 4px;
-        }
+        .cbtn { flex: 1; padding: 7px; border-radius: 8px; background: rgba(255,255,255,0.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: white; font-size: 0.68rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; }
         .cbtn:hover { background: rgba(0,245,255,0.3); border-color: var(--accent); }
         .cbtn.dl:hover { background: rgba(0,128,255,0.35); border-color: var(--accent2); }
         .cbtn.rm { flex: 0; padding: 7px 10px; background: rgba(239,68,68,0.2); border-color: rgba(239,68,68,0.3); }
         .cbtn.rm:hover { background: rgba(239,68,68,0.45); }
         .card-meta { padding: 12px 14px; }
-        .card-uploader {
-            font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-            background: linear-gradient(90deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
+        .card-uploader { font-size: 0.68rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .card-time { font-size: 0.6rem; color: var(--text-muted); margin-top: 2px; }
-        .card-gloss {
-            position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: left 0.5s;
-        }
+        .card-gloss { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); transition: left 0.5s; }
         .photo-card:hover .card-gloss { left: 160%; }
 
         .empty-wrap { grid-column: 1 / -1; text-align: center; padding: 80px 20px; color: var(--text-muted); }
-        .empty-ico {
-            width: 68px; height: 68px; margin: 0 auto 20px;
-            background: rgba(0,245,255,0.06); border: 1px solid rgba(0,245,255,0.15);
-            border-radius: 20px; display: flex; align-items: center; justify-content: center;
-            font-size: 1.8rem; color: var(--accent);
-        }
-        .empty-wrap h3 { color: var(--text); font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
-        .empty-wrap p { font-size: 0.82rem; }
+        .empty-ico { width: 68px; height: 68px; margin: 0 auto 20px; background: rgba(0,245,255,0.06); border: 1px solid rgba(0,245,255,0.15); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--accent); }
 
-        .lightbox {
-            display: none; position: fixed; inset: 0; z-index: 5000;
-            background: rgba(0,0,0,0.92); backdrop-filter: blur(16px);
-            align-items: center; justify-content: center; padding: 20px;
-        }
+        .lightbox { display: none; position: fixed; inset: 0; z-index: 5000; background: rgba(0,0,0,0.92); backdrop-filter: blur(16px); align-items: center; justify-content: center; padding: 20px; }
         .lightbox.on { display: flex; }
         .lb-inner { position: relative; max-width: 90vw; max-height: 90vh; }
-        .lb-inner img { max-width: 90vw; max-height: 82vh; border-radius: 12px; object-fit: contain; display: block; }
-        .lb-close {
-            position: fixed; top: 20px; right: 20px; z-index: 5001;
-            width: 44px; height: 44px; border-radius: 12px;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-            color: white; font-size: 1.1rem; cursor: pointer; backdrop-filter: blur(10px);
-            display: flex; align-items: center; justify-content: center; transition: all 0.2s;
-        }
+        .lb-inner img { max-width: 90vw; max-height: 82vh; border-radius: 12px; object-fit: contain; }
+        .lb-close { position: fixed; top: 20px; right: 20px; z-index: 5001; width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; cursor: pointer; backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; }
         .lb-close:hover { background: rgba(239,68,68,0.3); border-color: #ef4444; }
-        .lb-info { text-align: center; margin-top: 12px; font-size: 0.76rem; color: rgba(255,255,255,0.6); }
 
-        .modal-bg {
-            display: none; position: fixed; inset: 0; z-index: 4000;
-            background: rgba(0,0,0,0.0); backdrop-filter: blur(0px);
-            align-items: center; justify-content: center; padding: 20px;
-            transition: background 0.3s ease, backdrop-filter 0.3s ease;
-        }
-        .modal-bg.on {
-            display: flex;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px);
-        }
-      
-        .modal-box {
-            background: var(--bg2); border: 1px solid var(--border); border-radius: 24px;
-            padding: 32px; max-width: 460px; width: 100%; position: relative;
-            opacity: 0; transform: translateY(16px) scale(0.97);
-            transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1), transform 0.35s cubic-bezier(0.34,1.3,0.64,1);
-        }
-        .modal-bg.on .modal-box {
-            opacity: 1; transform: translateY(0) scale(1);
-        }
-        .modal-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
-        .modal-title {
-            font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700;
-            letter-spacing: 2px; margin-bottom: 20px;
-        }
-       
-        .modal-title.sweep {
-            background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-            position: relative; display: inline-block;
-        }
-        .modal-title.sweep::after {
-            content: attr(data-text);
-            position: absolute; inset: 0;
-            background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.5) 50%, transparent 80%);
-            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-            background-size: 300% 100%;
-            animation: lightSweepBounce 4s ease-in-out infinite;
-        }
-        .modal-title:not(.sweep) { color: var(--accent); }
+        .modal-bg { display: none; position: fixed; inset: 0; z-index: 4000; align-items: center; justify-content: center; padding: 20px; }
+        .modal-bg.on { display: flex; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); }
+        .modal-box { background: var(--bg2); border: 1px solid var(--border); border-radius: 24px; padding: 32px; max-width: 460px; width: 100%; position: relative; opacity: 0; transform: translateY(16px) scale(0.97); transition: opacity 0.35s, transform 0.35s; }
+        .modal-bg.on .modal-box { opacity: 1; transform: translateY(0) scale(1); }
+        .modal-title { font-family: 'Orbitron', sans-serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 20px; color: var(--accent); }
         .step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
         .step:last-of-type { border-bottom: none; }
         .step-n { min-width: 26px; height: 26px; border-radius: 8px; background: rgba(0,245,255,0.1); border: 1px solid rgba(0,245,255,0.2); color: var(--accent); font-size: 0.7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
         .step-t { font-size: 0.82rem; color: rgba(232,237,245,0.8); line-height: 1.6; }
         .step-t b { color: var(--accent); font-weight: 600; }
 
-        .toast {
-            position: fixed; bottom: 24px; left: 50%;
-            transform: translateX(-50%) translateY(80px);
-            background: rgba(4,6,8,0.95); border: 1px solid var(--border); backdrop-filter: blur(20px);
-            padding: 11px 20px; border-radius: 12px; font-size: 0.8rem; color: var(--text);
-            z-index: 9999; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-            white-space: nowrap; display: flex; align-items: center; gap: 8px; pointer-events: none;
-        }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: rgba(4,6,8,0.95); border: 1px solid var(--border); backdrop-filter: blur(20px); padding: 11px 20px; border-radius: 12px; font-size: 0.8rem; color: var(--text); z-index: 9999; transition: transform 0.4s; white-space: nowrap; display: flex; align-items: center; gap: 8px; pointer-events: none; }
         .toast.on { transform: translateX(-50%) translateY(0); }
         .progress-bar { position: fixed; top: 0; left: 0; height: 2px; z-index: 9998; background: linear-gradient(90deg, var(--accent), var(--accent3)); width: 0%; transition: width 0.3s ease; }
         .fb-loading { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 20px; color: var(--text-muted); font-size: 0.8rem; grid-column: 1 / -1; }
 
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        body.no-anim .photo-card { transition: none !important; }
-        body.no-anim .photo-card:hover { transform: none !important; box-shadow: none !important; }
-
         @media (max-width: 900px) { #dashboard { padding: 16px 4% 80px; } }
         @media (max-width: 768px) {
             #dashboard { padding: 12px 3% 100px; }
-            .navbar { flex-direction: column; border-radius: 14px; top: 10px; padding: 12px 16px; gap: 10px; }
+            .navbar { flex-direction: column; top: 10px; padding: 12px 16px; }
             .nav-brand { width: 100%; justify-content: center; }
             .nav-right { width: 100%; justify-content: center; }
             .stats-row { flex-direction: column; align-items: stretch; }
@@ -612,43 +415,24 @@
 </head>
 <body>
 
-
 <div id="app-container">
     <div class="progress-bar" id="progress"></div>
-
-    <div class="bg-scene">
-        <div class="bg-mesh"></div>
-        <div class="bg-grid"></div>
-    </div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+    <div class="bg-scene"><div class="bg-mesh"></div><div class="bg-grid"></div></div>
+    <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
     <div class="scan-line" id="scanLine"></div>
-
     <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
 
     <div class="settings-panel" id="settingsPanel">
         <div class="drawer-head">
             <div class="drawer-title">⚙ SETTINGS</div>
-            <button class="flt-btn" onclick="closeDrawer()" style="width:36px;height:36px;border-radius:10px;">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
+            <button class="flt-btn" onclick="closeDrawer()" style="width:36px;height:36px;border-radius:10px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="drawer-body">
             <div class="setting-section">
                 <div class="setting-section-title">Tampilan</div>
-                <div class="toggle-row">
-                    <div><div class="toggle-label">Dark Mode</div><div class="toggle-sub">Aktifkan tema gelap</div></div>
-                    <label class="sw"><input type="checkbox" id="darkToggle" checked onchange="applyTheme()"><span class="sw-slider"></span></label>
-                </div>
-                <div class="toggle-row">
-                    <div><div class="toggle-label">Scan Lines</div><div class="toggle-sub">Efek CRT retro-futuristik</div></div>
-                    <label class="sw"><input type="checkbox" id="scanToggle" checked onchange="applyScan()"><span class="sw-slider"></span></label>
-                </div>
-                <div class="toggle-row">
-                    <div><div class="toggle-label">Animasi Hover</div><div class="toggle-sub">Efek hover pada kartu</div></div>
-                    <label class="sw"><input type="checkbox" id="animToggle" checked onchange="applyAnim()"><span class="sw-slider"></span></label>
-                </div>
+                <div class="toggle-row"><div><div class="toggle-label">Dark Mode</div><div class="toggle-sub">Aktifkan tema gelap</div></div><label class="sw"><input type="checkbox" id="darkToggle" checked onchange="applyTheme()"><span class="sw-slider"></span></label></div>
+                <div class="toggle-row"><div><div class="toggle-label">Scan Lines</div><div class="toggle-sub">Efek CRT retro-futuristik</div></div><label class="sw"><input type="checkbox" id="scanToggle" checked onchange="applyScan()"><span class="sw-slider"></span></label></div>
+                <div class="toggle-row"><div><div class="toggle-label">Animasi Hover</div><div class="toggle-sub">Efek hover pada kartu</div></div><label class="sw"><input type="checkbox" id="animToggle" checked onchange="applyAnim()"><span class="sw-slider"></span></label></div>
             </div>
             <div class="setting-section">
                 <div class="setting-section-title">Warna Aksen</div>
@@ -663,81 +447,45 @@
             </div>
             <div class="setting-section">
                 <div class="setting-section-title">Layout Galeri</div>
-                <div class="layout-opts">
-                    <div class="layout-opt" onclick="setLayout('grid-2')">2 Kolom</div>
-                    <div class="layout-opt on" onclick="setLayout('grid-3')">3 Kolom</div>
-                    <div class="layout-opt" onclick="setLayout('grid-4')">4 Kolom</div>
-                </div>
+                <div class="layout-opts"><div class="layout-opt" onclick="setLayout('grid-2')">2 Kolom</div><div class="layout-opt on" onclick="setLayout('grid-3')">3 Kolom</div><div class="layout-opt" onclick="setLayout('grid-4')">4 Kolom</div></div>
             </div>
             <div class="setting-section">
                 <div class="setting-section-title">Urutan Foto</div>
-                <select class="sort-select" id="sortSelect" onchange="applySortOrder()">
-                    <option value="desc">Terbaru ke Terlama</option>
-                    <option value="asc">Terlama ke Terbaru</option>
-                </select>
+                <select class="sort-select" id="sortSelect" onchange="applySortOrder()"><option value="desc">Terbaru ke Terlama</option><option value="asc">Terlama ke Terbaru</option></select>
             </div>
             <div class="setting-section">
                 <div class="setting-section-title">Watermark</div>
-                <div class="toggle-row">
-                    <div><div class="toggle-label">Watermark Username</div><div class="toggle-sub">Tampilkan username di pojok</div></div>
-                    <label class="sw"><input type="checkbox" id="watermarkToggle" onchange="applyWatermark()"><span class="sw-slider"></span></label>
-                </div>
+                <div class="toggle-row"><div><div class="toggle-label">Watermark Username</div><div class="toggle-sub">Tampilkan username di pojok</div></div><label class="sw"><input type="checkbox" id="watermarkToggle" onchange="applyWatermark()"><span class="sw-slider"></span></label></div>
             </div>
         </div>
     </div>
 
     <div class="float-hub">
-        <a href="https://discord.com/invite/aarURee5bH" target="_blank" class="flt-btn" title="Discord">
-            <i class="fa-brands fa-discord"></i>
-        </a>
-        <button class="flt-btn" onclick="openDrawer()" title="Settings">
-            <i class="fa-solid fa-gear"></i>
-        </button>
-        <button class="flt-btn" id="topBtn" onclick="scrollToTop()" title="Top" style="display:none;">
-            <i class="fa-solid fa-arrow-up"></i>
-        </button>
+        <a href="https://discord.com/invite/aarURee5bH" target="_blank" class="flt-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
+        <button class="flt-btn" onclick="openDrawer()" title="Settings"><i class="fa-solid fa-gear"></i></button>
+        <button class="flt-btn" id="topBtn" onclick="scrollToTop()" title="Top" style="display:none;"><i class="fa-solid fa-arrow-up"></i></button>
     </div>
 
     <div id="watermarkEl" style="display:none; position:fixed; bottom:60px; left:16px; z-index:100; font-size:0.65rem; font-family:'Orbitron',sans-serif; color:rgba(0,245,255,0.3); letter-spacing:2px; pointer-events:none;"></div>
 
     <div id="auth-page">
-        <div class="auth-brand">
-            <span class="sweep-text" data-text="P3TO" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,10vw,5rem); filter:drop-shadow(0 0 24px rgba(0,245,255,0.25));">P3TO</span>
-        </div>
+        <div class="auth-brand"><span class="sweep-text" data-text="P3TO" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,10vw,5rem); filter:drop-shadow(0 0 24px rgba(0,245,255,0.25));">P3TO</span></div>
         <div class="auth-status">
             <div class="auth-label sweep-text" data-text="Authenticating" style="animation-delay:0.5s;">Authenticating</div>
             <div class="auth-bar"><div class="auth-bar-fill" id="authBarFill"></div></div>
-            <div class="auth-dots">
-                <div class="auth-dot"></div>
-                <div class="auth-dot"></div>
-                <div class="auth-dot"></div>
-            </div>
+            <div class="auth-dots"><div class="auth-dot"></div><div class="auth-dot"></div><div class="auth-dot"></div></div>
             <div class="auth-sub" id="authSubText">Memverifikasi sesi...</div>
         </div>
     </div>
 
     <section id="login-page">
         <div class="login-container">
-            <div class="login-brand">
-                <div class="brand-mark">P3TO</div>
-                <div class="brand-sub">Private Archive System</div>
-            </div>
-            <div style="text-align:center;">
-                <div class="ka-badge"><div class="ka-dot"></div>Secured by P3TO Systems</div>
-            </div>
+            <div class="login-brand"><div class="brand-mark">P3TO</div><div class="brand-sub">Private Archive System</div></div>
+            <div style="text-align:center;"><div class="ka-badge"><div class="ka-dot"></div>Secured by P3TO Systems</div></div>
             <div class="login-card">
-                <div class="field-wrap">
-                    <input type="text" id="uInput" class="login-field" placeholder="Username" autocomplete="username">
-                    <i class="fa-solid fa-user field-icon"></i>
-                </div>
-                <div class="field-wrap">
-                    <input type="password" id="pInput" class="login-field" placeholder="Password" autocomplete="current-password">
-                    <i class="fa-solid fa-lock field-icon"></i>
-                    <i class="fa-solid fa-eye pw-toggle" id="eyeBtn" onclick="togglePw()"></i>
-                </div>
-                <button class="login-btn" id="loginBtn" onclick="doLogin()">
-                    <span id="loginText">MASUK</span>
-                </button>
+                <div class="field-wrap"><input type="text" id="uInput" class="login-field" placeholder="Username" autocomplete="username"><i class="fa-solid fa-user field-icon"></i></div>
+                <div class="field-wrap"><input type="password" id="pInput" class="login-field" placeholder="Password" autocomplete="current-password"><i class="fa-solid fa-lock field-icon"></i><i class="fa-solid fa-eye pw-toggle" id="eyeBtn" onclick="togglePw()"></i></div>
+                <button class="login-btn" id="loginBtn" onclick="doLogin()"><span id="loginText">MASUK</span></button>
                 <div class="login-msg" id="loginMsg"></div>
             </div>
         </div>
@@ -745,397 +493,151 @@
 
     <main id="dashboard">
         <nav class="navbar">
-            <div class="nav-brand">
-                <div class="nav-logo">P3TO</div>
-                <div class="nav-sep"></div>
-                <div class="nav-info">
-                    <div class="nav-user" id="navUser">—</div>
-                    <div class="nav-role" id="navRole">MEMBER</div>
-                </div>
-            </div>
-            <div class="nav-right">
-                <button class="nbtn" id="tutBtn" style="display:none;" onclick="openModal('tutModal')">
-                    <i class="fa-solid fa-book-open"></i> Panduan
-                </button>
-                <button class="nbtn red" onclick="confirmLogout()">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-                </button>
-            </div>
+            <div class="nav-brand"><div class="nav-logo">P3TO</div><div class="nav-sep"></div><div class="nav-info"><div class="nav-user" id="navUser">—</div><div class="nav-role" id="navRole">MEMBER</div></div></div>
+            <div class="nav-right"><button class="nbtn" id="tutBtn" style="display:none;" onclick="openModal('tutModal')"><i class="fa-solid fa-book-open"></i> Panduan</button><button class="nbtn red" onclick="confirmLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button></div>
         </nav>
 
         <div class="toolbar">
-            <div class="search-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Cari berdasarkan uploader..." oninput="filterGallery()">
-            </div>
-            <button class="filter-btn" id="myPhotosBtn" style="display:none;" onclick="toggleMyPhotos()">
-                <i class="fa-solid fa-user"></i> Foto Saya
-            </button>
+            <div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="searchInput" placeholder="Cari berdasarkan uploader..." oninput="filterGallery()"></div>
+            <button class="filter-btn" id="myPhotosBtn" style="display:none;" onclick="toggleMyPhotos()"><i class="fa-solid fa-user"></i> Foto Saya</button>
         </div>
 
-        <div class="upload-panel" id="uploadPanel" style="display:none;">
-            <i class="fa-solid fa-link" style="color:var(--text-muted); font-size:0.85rem;"></i>
-            <input type="text" id="urlInput" placeholder="Paste link gambar HD (ImageKit, Postimages, dll.)...">
-            <button class="upload-btn" id="uploadBtn" onclick="uploadPhoto()">
-                <i class="fa-solid fa-plus"></i> UNGGAH
-            </button>
-        </div>
+        <div class="upload-panel" id="uploadPanel" style="display:none;"><i class="fa-solid fa-link" style="color:var(--text-muted);"></i><input type="text" id="urlInput" placeholder="Paste link gambar HD (ImageKit, Postimages, dll.)..."><button class="upload-btn" id="uploadBtn" onclick="uploadPhoto()"><i class="fa-solid fa-plus"></i> UNGGAH</button></div>
 
         <div class="stats-row">
-            <div class="stats-left">
-                <div class="stat-pill"><i class="fa-solid fa-images"></i><span>Total: <b id="totalCount">0</b> foto</span></div>
-                <div class="stat-pill" id="myStatPill" style="display:none;"><i class="fa-solid fa-user-circle"></i><span>Login: <b id="statUser">—</b></span></div>
-                <div class="stat-pill" id="filteredPill" style="display:none;"><i class="fa-solid fa-filter"></i><span>Menampilkan: <b id="filteredCount">0</b> foto</span></div>
-            </div>
-            <button class="zip-btn" onclick="downloadAllZip()">
-                <i class="fa-solid fa-box-archive"></i> Download Semua (.zip)
-            </button>
+            <div class="stats-left"><div class="stat-pill"><i class="fa-solid fa-images"></i><span>Total: <b id="totalCount">0</b> foto</span></div><div class="stat-pill" id="myStatPill" style="display:none;"><i class="fa-solid fa-user-circle"></i><span>Login: <b id="statUser">—</b></span></div><div class="stat-pill" id="filteredPill" style="display:none;"><i class="fa-solid fa-filter"></i><span>Menampilkan: <b id="filteredCount">0</b> foto</span></div></div>
+            <button class="zip-btn" onclick="downloadAllZip()"><i class="fa-solid fa-box-archive"></i> Download Semua (.zip)</button>
         </div>
 
-        <div class="gallery grid-3" id="gallery">
-            <div class="fb-loading">
-                <div class="spin"></div> Memuat galeri...
-            </div>
-        </div>
+        <div class="gallery grid-3" id="gallery"><div class="fb-loading"><div class="spin"></div> Memuat galeri...</div></div>
     </main>
 
-    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-        <div class="lb-inner">
-            <button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('on')">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <img id="lbImg" src="" alt="">
-            <div class="lb-info" id="lbInfo"></div>
-        </div>
-    </div>
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)"><div class="lb-inner"><button class="lb-close" onclick="document.getElementById('lightbox').classList.remove('on')"><i class="fa-solid fa-xmark"></i></button><img id="lbImg" src="" alt=""><div class="lb-info" id="lbInfo"></div></div></div>
 
-    <div class="modal-bg" id="tutModal" onclick="if(event.target===this)closeModal('tutModal')">
-        <div class="modal-box">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <div class="modal-title">TUTORIAL UPLOAD HD</div>
-                <button class="flt-btn" onclick="closeModal('tutModal')" style="width:36px;height:36px;border-radius:10px;"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="step"><div class="step-n">1</div><div class="step-t">Buka <b>Imagekit.io</b> atau <b>Postimages.org</b></div></div>
-            <div class="step"><div class="step-n">2</div><div class="step-t">Login dengan <b>akun Google</b> kamu</div></div>
-            <div class="step"><div class="step-n">3</div><div class="step-t">Masuk ke menu <b>Media Library</b></div></div>
-            <div class="step"><div class="step-n">4</div><div class="step-t">Klik <b>New → Upload File → My Device</b></div></div>
-            <div class="step"><div class="step-n">5</div><div class="step-t">Unggah foto, lalu <b>Copy URL</b></div></div>
-            <div class="step"><div class="step-n">6</div><div class="step-t">Paste URL ke <b>kotak upload</b> di dashboard</div></div>
-            <button onclick="closeModal('tutModal')" style="width:100%;margin-top:20px;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg);border:none;border-radius:12px;font-family:'Orbitron',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:2px;cursor:pointer;">MENGERTI</button>
-        </div>
-    </div>
+    <div class="modal-bg" id="tutModal" onclick="if(event.target===this)closeModal('tutModal')"><div class="modal-box"><div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;"><div class="modal-title">TUTORIAL UPLOAD HD</div><button class="flt-btn" onclick="closeModal('tutModal')" style="width:36px;height:36px;border-radius:10px;"><i class="fa-solid fa-xmark"></i></button></div><div class="step"><div class="step-n">1</div><div class="step-t">Buka <b>Imagekit.io</b> atau <b>Postimages.org</b></div></div><div class="step"><div class="step-n">2</div><div class="step-t">Login dengan <b>akun Google</b> kamu</div></div><div class="step"><div class="step-n">3</div><div class="step-t">Masuk ke menu <b>Media Library</b></div></div><div class="step"><div class="step-n">4</div><div class="step-t">Klik <b>New → Upload File → My Device</b></div></div><div class="step"><div class="step-n">5</div><div class="step-t">Unggah foto, lalu <b>Copy URL</b></div></div><div class="step"><div class="step-n">6</div><div class="step-t">Paste URL ke <b>kotak upload</b> di dashboard</div></div><button onclick="closeModal('tutModal')" style="width:100%;margin-top:20px;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg);border:none;border-radius:12px;font-family:'Orbitron',sans-serif;font-size:0.68rem;font-weight:700;letter-spacing:2px;cursor:pointer;">MENGERTI</button></div></div>
 
-    <div class="modal-bg" id="logoutModal" onclick="if(event.target===this)closeModal('logoutModal')">
-        <div class="modal-box" style="max-width:360px;">
-            <div class="modal-title sweep" data-text="KONFIRMASI LOGOUT" style="margin-bottom:12px;">KONFIRMASI LOGOUT</div>
-            <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:24px;">Apakah kamu yakin ingin keluar dari sesi ini?</p>
-            <div style="display:flex; gap:10px;">
-                <button onclick="closeModal('logoutModal')" style="flex:1;padding:11px;background:var(--surface);border:1px solid var(--border);border-radius:11px;color:var(--text-muted);font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--border-accent)'" onmouseout="this.style.borderColor='var(--border)'">Batal</button>
-                <button onclick="location.reload()" style="flex:1;padding:11px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:11px;color:#fca5a5;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='rgba(239,68,68,0.28)'" onmouseout="this.style.background='rgba(239,68,68,0.15)'">Logout</button>
-            </div>
-        </div>
-    </div>
+    <div class="modal-bg" id="logoutModal" onclick="if(event.target===this)closeModal('logoutModal')"><div class="modal-box" style="max-width:360px;"><div class="modal-title">KONFIRMASI LOGOUT</div><p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:24px;">Apakah kamu yakin ingin keluar dari sesi ini?</p><div style="display:flex; gap:10px;"><button onclick="closeModal('logoutModal')" style="flex:1;padding:11px;background:var(--surface);border:1px solid var(--border);border-radius:11px;color:var(--text-muted);cursor:pointer;">Batal</button><button onclick="location.reload()" style="flex:1;padding:11px;background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:11px;color:#fca5a5;cursor:pointer;">Logout</button></div></div></div>
 
     <div class="toast" id="toast"></div>
 </div>
 
-
 <div id="blocked-overlay" style="display:none; position:fixed; inset:0; z-index:99999; background:#040608; align-items:center; justify-content:center; flex-direction:column; gap:28px; text-align:center; padding:20px;">
-    <div style="font-size:4rem; color:#00f5ff; filter:drop-shadow(0 0 20px rgba(0,245,255,0.5)); animation:blockPulse 1.5s ease-in-out infinite;">
-        <i class="fa-solid fa-shield-halved"></i>
-    </div>
+    <div style="font-size:4rem; color:#00f5ff; filter:drop-shadow(0 0 20px rgba(0,245,255,0.5)); animation:blockPulse 1.5s ease-in-out infinite;"><i class="fa-solid fa-shield-halved"></i></div>
     <div style="font-size:clamp(1.2rem,5vw,2rem); letter-spacing:4px; font-weight:700; color:#00f5ff; text-transform:uppercase;">AKSES DIBLOKIR</div>
     <div style="font-size:0.75rem; color:rgba(0,245,255,0.5); letter-spacing:2px;">Developer Tools Terdeteksi</div>
     <div style="font-size:0.7rem; color:rgba(255,255,255,0.3); margin-top:20px; max-width:300px;">Tutup Inspect Element / Developer Tools untuk melanjutkan</div>
 </div>
 
-<style>
-    @keyframes blockPulse {
-        0%, 100% { opacity: 0.6; transform: scale(1); }
-        50% { opacity: 1; transform: scale(1.1); }
-    }
-</style>
+<style>@keyframes blockPulse{0%,100%{opacity:0.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}</style>
 
 <script>
-
 (function() {
-    let isBlocked = false;
-    let blockedOverlay = document.getElementById('blocked-overlay');
-    let appContainer = document.getElementById('app-container');
-    
-    function showBlockedScreen() {
-        if (isBlocked) return;
-        isBlocked = true;
-        
-       
-        if (appContainer) appContainer.style.display = 'none';
-        
-       
-        if (blockedOverlay) {
-            blockedOverlay.style.display = 'flex';
-        }
-        
-        
+    let blocked = false;
+    const overlay = document.getElementById('blocked-overlay');
+    const app = document.getElementById('app-container');
+
+    function block() {
+        if (blocked) return;
+        blocked = true;
+        if (app) app.style.display = 'none';
+        if (overlay) overlay.style.display = 'flex';
         document.title = '🔒 Access Denied';
-        
-   
         document.body.style.overflow = 'hidden';
-        
-   
     }
-    
-    function hideBlockedScreen() {
-        if (!isBlocked) return;
-        isBlocked = false;
-        
-       
-        if (blockedOverlay) {
-            blockedOverlay.style.display = 'none';
-        }
-        
-        
-        if (appContainer) appContainer.style.display = 'block';
-        
-      
+
+    function unblock() {
+        if (!blocked) return;
+        blocked = false;
+        if (overlay) overlay.style.display = 'none';
+        if (app) app.style.display = 'block';
         document.title = 'P3TO ARCHIVE';
-       
         document.body.style.overflow = '';
-        
-        
-        const loginPage = document.getElementById('login-page');
-        if (loginPage) loginPage.style.display = 'flex';
-        const dashboard = document.getElementById('dashboard');
-        if (dashboard) dashboard.style.display = 'none';
     }
-    
-    function detectDevTools() {
-      
+
+    function detect() {
         const widthDiff = window.outerWidth - window.innerWidth;
         const heightDiff = window.outerHeight - window.innerHeight;
-        const threshold = 160;
-        
-     
-        let devToolsOpen = false;
-        try {
-            const startTime = performance.now();
-            debugger;
-            const endTime = performance.now();
-            if (endTime - startTime > 100) {
-                devToolsOpen = true;
-            }
-        } catch(e) {}
-        
-       
-        if (widthDiff > threshold || heightDiff > threshold) {
-            devToolsOpen = true;
-        }
-        
-       
-        const devtools = /./;
-        devtools.toString = function() {
-            devToolsOpen = true;
-            return '';
-        };
-        console.log(devtools);
-        
-        if (devToolsOpen && !isBlocked) {
-            showBlockedScreen();
-        } else if (!devToolsOpen && isBlocked) {
-            hideBlockedScreen();
+        if (widthDiff > 200 || heightDiff > 200) {
+            block();
+        } else if (blocked) {
+            unblock();
         }
     }
 
-    function blockShortcuts(e) {
-        const blockedKeys = ['F12', 'I', 'J', 'C', 'U', 'S', 'K', 'E'];
-        
-        if (e.key === 'F12') {
-            e.preventDefault();
-            e.stopPropagation();
-            showBlockedScreen();
-            return false;
-        }
-        
-        if (e.ctrlKey && e.shiftKey && blockedKeys.includes(e.key.toUpperCase())) {
-            e.preventDefault();
-            e.stopPropagation();
-            showBlockedScreen();
-            return false;
-        }
-        
-        if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S')) {
-            e.preventDefault();
-            e.stopPropagation();
-            showBlockedScreen();
-            return false;
-        }
-        
-        if (e.metaKey && e.altKey && blockedKeys.includes(e.key.toUpperCase())) {
-            e.preventDefault();
-            e.stopPropagation();
-            showBlockedScreen();
-            return false;
-        }
-    }
-    
-    
-    function blockContextMenu(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-    }
-    
-    
-    if (window.console) {
-        const noop = () => {};
-        const methods = ['log', 'info', 'warn', 'error', 'debug', 'trace', 'dir', 'table', 'group', 'groupCollapsed', 'groupEnd', 'clear'];
-        methods.forEach(method => {
-            if (window.console[method]) window.console[method] = noop;
-        });
-    }
-    
-  
-    document.addEventListener('keydown', blockShortcuts, true);
-    document.addEventListener('contextmenu', blockContextMenu, true);
-    document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; }, true);
-    
-   
-    setInterval(detectDevTools, 200);
-    detectDevTools();
+    setInterval(detect, 1000);
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12') { e.preventDefault(); block(); return false; }
+        if (e.ctrlKey && e.shiftKey && ['I','J','C','K'].includes(e.key.toUpperCase())) { e.preventDefault(); block(); return false; }
+        if (e.ctrlKey && e.key === 'u') { e.preventDefault(); block(); return false; }
+        if (e.metaKey && e.altKey && e.key === 'I') { e.preventDefault(); block(); return false; }
+    }, true);
+
+    document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; }, true);
+    document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; }, true);
 })();
+</script>
 
+<script>
+const _A_NAME = "Bomax102's Application";
+const _A_OWNER = "GKwjASBqxy";
+const _A_VER = "1.0";
 
-const _A_NAME    = "Bomax102's Application";
-const _A_OWNER   = "GKwjASBqxy";
-const _A_VER     = "1.0";
-
-let sessionId  = null;
+let sessionId = null;
 let activeUser = null;
 
 function generateHWID() {
     const nav = window.navigator, scr = window.screen;
-    const raw = [nav.userAgent, nav.language, scr.colorDepth,
-        scr.width + 'x' + scr.height, new Date().getTimezoneOffset(),
-        nav.hardwareConcurrency || 0, nav.platform || ''].join('|');
+    const raw = [nav.userAgent, nav.language, scr.colorDepth, scr.width + 'x' + scr.height, new Date().getTimezoneOffset(), nav.hardwareConcurrency || 0, nav.platform || ''].join('|');
     let hash = 0;
     for (let i = 0; i < raw.length; i++) { const c = raw.charCodeAt(i); hash = ((hash << 5) - hash) + c; hash = hash & hash; }
     return 'P3TO-WEB-' + Math.abs(hash).toString(16).toUpperCase().padStart(12, '0');
 }
 
-const USER_ROLES = {
-    admin:  ["adminP3TO"],
-    dev:    ["mizael", "tya"],
-    member: ["memberP3TO"]
-};
-
+const USER_ROLES = { admin: ["PETOADMIN"], dev: ["M1XO", "tya"], member: ["P3TO"] };
 function getUserRole(username) {
     if (USER_ROLES.admin.includes(username)) return "admin";
-    if (USER_ROLES.dev.includes(username))   return "dev";
+    if (USER_ROLES.dev.includes(username)) return "dev";
     return "member";
 }
 
-let allPhotos    = [];
-let myPhotosOnly = false;
-let currentLayout = 'grid-3';
-let sortOrder    = 'desc';
+let allPhotos = [], myPhotosOnly = false, currentLayout = 'grid-3', sortOrder = 'desc';
 
-function setProgress(pct) {
-    const el = document.getElementById('progress');
-    if (!el) return;
-    el.style.width = pct + '%';
-    if (pct >= 100) setTimeout(() => { el.style.width = '0%'; }, 500);
-}
-
-function setMsg(msg, type) {
-    const el = document.getElementById('loginMsg');
-    if (!el) return;
-    el.className = 'login-msg ' + type;
-    if (type === 'load') el.innerHTML = `<div class="spin"></div> ${msg}`;
-    else if (type === 'err') el.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`;
-    else el.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`;
-}
-
-function showToast(msg, ico = '✓') {
-    const t = document.getElementById('toast');
-    if (!t) return;
-    t.innerHTML = `<span>${ico}</span> ${msg}`;
-    t.classList.add('on');
-    setTimeout(() => t.classList.remove('on'), 2800);
-}
+function setProgress(pct) { const el = document.getElementById('progress'); if (el) { el.style.width = pct + '%'; if (pct >= 100) setTimeout(() => el.style.width = '0%', 500); } }
+function setMsg(msg, type) { const el = document.getElementById('loginMsg'); if (!el) return; el.className = 'login-msg ' + type; if (type === 'load') el.innerHTML = `<div class="spin"></div> ${msg}`; else if (type === 'err') el.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${msg}`; else el.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${msg}`; }
+function showToast(msg, ico = '✓') { const t = document.getElementById('toast'); if (!t) return; t.innerHTML = `<span>${ico}</span> ${msg}`; t.classList.add('on'); setTimeout(() => t.classList.remove('on'), 2800); }
 
 let _authBarInterval = null;
-
 function showAuthPage(callback) {
     const page = document.getElementById('auth-page');
     const fill = document.getElementById('authBarFill');
-    const sub  = document.getElementById('authSubText');
-
+    const sub = document.getElementById('authSubText');
     page.classList.remove('leaving');
     page.classList.add('on');
-
     fill.style.width = '0%';
     let pct = 0;
-
-    const steps = [
-        { pct: 30, label: 'Memverifikasi Account...' },
-        { pct: 55, label: 'Memeriksa Database...' },
-        { pct: 80, label: 'Memuat profil...' },
-        { pct: 95, label: 'Menyiapkan dashboard...' },
-    ];
+    const steps = [{ pct: 30, label: 'Memverifikasi sesi...' }, { pct: 55, label: 'Memeriksa kredensial...' }, { pct: 80, label: 'Memuat profil...' }, { pct: 95, label: 'Menyiapkan dashboard...' }];
     let si = 0;
-
     clearInterval(_authBarInterval);
-    _authBarInterval = setInterval(() => {
-        if (si < steps.length && pct >= steps[si].pct - 5) {
-            sub.textContent = steps[si].label;
-            fill.style.width = steps[si].pct + '%';
-            pct = steps[si].pct;
-            si++;
-        }
-    }, 350);
-
-    setTimeout(() => {
-        clearInterval(_authBarInterval);
-        fill.style.width = '100%';
-        sub.textContent = 'Selamat datang!';
-        setTimeout(() => {
-            page.classList.add('leaving');
-            setTimeout(() => {
-                page.classList.remove('on');
-                page.classList.remove('leaving');
-                if (callback) callback();
-            }, 500);
-        }, 400);
-    }, 1800);
+    _authBarInterval = setInterval(() => { if (si < steps.length && pct >= steps[si].pct - 5) { sub.textContent = steps[si].label; fill.style.width = steps[si].pct + '%'; pct = steps[si].pct; si++; } }, 350);
+    setTimeout(() => { clearInterval(_authBarInterval); fill.style.width = '100%'; sub.textContent = 'Selamat datang!'; setTimeout(() => { page.classList.add('leaving'); setTimeout(() => { page.classList.remove('on'); page.classList.remove('leaving'); if (callback) callback(); }, 500); }, 400); }, 1800);
 }
 
 function startFirestoreListener() {
     if (!window._fbReady) return;
     try {
         const db = window._db;
-        const q  = window._query(window._col(db, 'photos'), window._orderBy('createdAt', 'desc'));
+        const q = window._query(window._col(db, 'photos'), window._orderBy('createdAt', 'desc'));
         window._onSnap(q, (snapshot) => {
             allPhotos = [];
             snapshot.forEach(docSnap => {
                 const data = docSnap.data();
                 const tsSeconds = data.createdAt ? data.createdAt.seconds : 0;
-                allPhotos.push({
-                    id:       docSnap.id,
-                    url:      data.imageUrl || data.url || '',
-                    uploader: data.uploader || 'Unknown',
-                    time:     tsSeconds
-                        ? new Date(tsSeconds * 1000).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' })
-                        : 'Syncing...',
-                    ts:       tsSeconds * 1000
-                });
+                allPhotos.push({ id: docSnap.id, url: data.imageUrl || data.url || '', uploader: data.uploader || 'Unknown', time: tsSeconds ? new Date(tsSeconds * 1000).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : 'Syncing...', ts: tsSeconds * 1000 });
             });
             renderGallery();
         });
-    } catch (err) {
-        const gallery = document.getElementById('gallery');
-        if (gallery) {
-            gallery.innerHTML = `<div class="empty-wrap"><div class="empty-ico"><i class="fa-solid fa-database"></i></div><h3>Koneksi Bermasalah</h3><p>Tidak dapat memuat data. Coba refresh halaman.</p></div>`;
-        }
-    }
+    } catch (err) { const gallery = document.getElementById('gallery'); if (gallery) gallery.innerHTML = `<div class="empty-wrap"><div class="empty-ico"><i class="fa-solid fa-database"></i></div><h3>Koneksi Bermasalah</h3><p>Tidak dapat memuat data. Coba refresh halaman.</p></div>`; }
 }
 
 async function initSession() {
@@ -1143,7 +645,7 @@ async function initSession() {
         setMsg('Menginisialisasi sesi...', 'load');
         setProgress(20);
         const params = new URLSearchParams({ type: 'init', name: _A_NAME, ownerid: _A_OWNER, ver: _A_VER });
-        const res  = await fetch('https://keyauth.win/api/1.2/?' + params.toString());
+        const res = await fetch('https://keyauth.win/api/1.2/?' + params.toString());
         const data = await res.json();
         if (data.success) { sessionId = data.sessionid; setProgress(40); return true; }
         else { setMsg('Gagal memulai sesi. Coba lagi.', 'err'); return false; }
@@ -1154,269 +656,93 @@ async function doLogin() {
     const username = document.getElementById('uInput').value.trim();
     const password = document.getElementById('pInput').value.trim();
     if (!username || !password) { setMsg('Isi username dan password!', 'err'); return; }
-
     const btn = document.getElementById('loginBtn');
     const txt = document.getElementById('loginText');
     btn.disabled = true;
     txt.innerHTML = `<span class="spin" style="display:inline-block;margin-right:8px;"></span> Memverifikasi...`;
-
-    if (!sessionId) {
-        const ok = await initSession();
-        if (!ok) { btn.disabled = false; txt.textContent = 'MASUK'; return; }
-    }
-
+    if (!sessionId) { const ok = await initSession(); if (!ok) { btn.disabled = false; txt.textContent = 'MASUK'; return; } }
     setMsg('Memeriksa kredensial...', 'load');
     setProgress(60);
-
     try {
         const hwid = generateHWID();
-        const params = new URLSearchParams({
-            type: 'login', username, pass: password, hwid,
-            sessionid: sessionId, name: _A_NAME, ownerid: _A_OWNER
-        });
-        const res  = await fetch('https://keyauth.win/api/1.2/?' + params.toString());
+        const params = new URLSearchParams({ type: 'login', username, pass: password, hwid, sessionid: sessionId, name: _A_NAME, ownerid: _A_OWNER });
+        const res = await fetch('https://keyauth.win/api/1.2/?' + params.toString());
         const data = await res.json();
         setProgress(90);
-
         if (data.success) {
             const uname = data.info?.username || username;
-            const role  = getUserRole(uname);
-            activeUser  = { username: uname, role };
-
+            const role = getUserRole(uname);
+            activeUser = { username: uname, role };
             setMsg('Login berhasil! Memuat dashboard...', 'ok');
             setProgress(100);
-
             document.getElementById('login-page').style.display = 'none';
-
             showAuthPage(() => {
                 document.getElementById('dashboard').style.display = 'block';
-
                 document.getElementById('navUser').textContent = `Selamat datang, ${activeUser.username}`;
                 const navRole = document.getElementById('navRole');
                 navRole.textContent = activeUser.role.toUpperCase();
                 navRole.classList.remove('admin', 'dev', 'member');
                 navRole.classList.add(activeUser.role);
-
                 if (activeUser.role === 'admin' || activeUser.role === 'dev') {
                     document.getElementById('uploadPanel').style.display = 'flex';
-                    document.getElementById('tutBtn').style.display      = 'flex';
+                    document.getElementById('tutBtn').style.display = 'flex';
                     document.getElementById('myPhotosBtn').style.display = 'flex';
                 }
-
                 document.getElementById('myStatPill').style.display = 'flex';
                 document.getElementById('statUser').textContent = activeUser.username;
-
                 const wm = document.getElementById('watermarkEl');
                 if (wm) wm.textContent = activeUser.username.toUpperCase();
-
-                if (window._fbReady) {
-                    startFirestoreListener();
-                } else {
-                    window.addEventListener('firebase-ready', startFirestoreListener, { once: true });
-                }
-
+                if (window._fbReady) startFirestoreListener();
+                else window.addEventListener('firebase-ready', startFirestoreListener, { once: true });
                 showToast(`Login sebagai ${activeUser.role.toUpperCase()}`, '✓');
             });
-
         } else {
             setProgress(0);
-            const errMap = {
-                'User is banned':          'Akun kamu diblokir oleh admin.',
-                'Incorrect password':      'Password salah.',
-                'User not found':          'Username tidak ditemukan.',
-                'Application not found':   'Terjadi kesalahan konfigurasi.',
-                'Session does not exist':  'Sesi habis, coba refresh halaman.'
-            };
+            const errMap = { 'User is banned': 'Akun kamu diblokir oleh admin.', 'Incorrect password': 'Password salah.', 'User not found': 'Username tidak ditemukan.', 'Application not found': 'Terjadi kesalahan konfigurasi.', 'Session does not exist': 'Sesi habis, coba refresh halaman.' };
             if (data.message && data.message.toLowerCase().includes('session')) sessionId = null;
             setMsg(errMap[data.message] || 'Login gagal. Periksa kembali data kamu.', 'err');
             btn.disabled = false;
             txt.textContent = 'MASUK';
         }
-    } catch {
-        setProgress(0);
-        setMsg('Gagal terhubung ke server.', 'err');
-        btn.disabled = false;
-        txt.textContent = 'MASUK';
-    }
+    } catch { setProgress(0); setMsg('Gagal terhubung ke server.', 'err'); btn.disabled = false; txt.textContent = 'MASUK'; }
 }
 
 function confirmLogout() { openModal('logoutModal'); }
-
-function openModal(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.style.display = 'flex';
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => { el.classList.add('on'); });
-    });
-}
-
-function closeModal(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.remove('on');
-    setTimeout(() => { el.style.display = 'none'; }, 350);
-}
-
-function openDrawer() {
-    document.getElementById('settingsPanel').classList.add('on');
-    document.getElementById('drawerOverlay').classList.add('on');
-}
-function closeDrawer() {
-    document.getElementById('settingsPanel').classList.remove('on');
-    document.getElementById('drawerOverlay').classList.remove('on');
-}
-function applyTheme() {
-    const isDark = document.getElementById('darkToggle').checked;
-    document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    showToast(isDark ? 'Tema Gelap aktif' : 'Tema Terang aktif', '🎨');
-}
-function applyScan() {
-    const el = document.getElementById('scanLine');
-    if (el) el.style.display = document.getElementById('scanToggle').checked ? 'block' : 'none';
-}
-function applyAnim() {
-    document.body.classList.toggle('no-anim', !document.getElementById('animToggle').checked);
-}
-function setAccent(el) {
-    document.querySelectorAll('.clr').forEach(c => c.classList.remove('on'));
-    el.classList.add('on');
-    el.getAttribute('data-a').split(';').filter(Boolean).forEach(pair => {
-        const [k, v] = pair.split(':');
-        if (k && v) document.documentElement.style.setProperty(k.trim(), v.trim());
-    });
-    showToast('Warna aksen diubah', '🎨');
-}
-function setLayout(cls) {
-    currentLayout = cls;
-    const gallery = document.getElementById('gallery');
-    if (gallery) { gallery.classList.remove('grid-2','grid-3','grid-4'); gallery.classList.add(cls); }
-    document.querySelectorAll('.layout-opt').forEach(opt => {
-        opt.classList.toggle('on', opt.getAttribute('onclick') === `setLayout('${cls}')`);
-    });
-    showToast('Layout diubah ke ' + cls.replace('grid-','') + ' kolom', '⊞');
-}
-function applySortOrder() {
-    sortOrder = document.getElementById('sortSelect').value;
-    renderGallery();
-    showToast('Urutan foto diubah', '↕');
-}
-function applyWatermark() {
-    document.getElementById('watermarkEl').style.display =
-        document.getElementById('watermarkToggle').checked ? 'block' : 'none';
-}
+function openModal(id) { const el = document.getElementById(id); if (!el) return; el.style.display = 'flex'; requestAnimationFrame(() => { requestAnimationFrame(() => { el.classList.add('on'); }); }); }
+function closeModal(id) { const el = document.getElementById(id); if (!el) return; el.classList.remove('on'); setTimeout(() => { el.style.display = 'none'; }, 350); }
+function openDrawer() { document.getElementById('settingsPanel').classList.add('on'); document.getElementById('drawerOverlay').classList.add('on'); }
+function closeDrawer() { document.getElementById('settingsPanel').classList.remove('on'); document.getElementById('drawerOverlay').classList.remove('on'); }
+function applyTheme() { document.body.setAttribute('data-theme', document.getElementById('darkToggle').checked ? 'dark' : 'light'); showToast(document.getElementById('darkToggle').checked ? 'Tema Gelap aktif' : 'Tema Terang aktif', '🎨'); }
+function applyScan() { document.getElementById('scanLine').style.display = document.getElementById('scanToggle').checked ? 'block' : 'none'; }
+function applyAnim() { document.body.classList.toggle('no-anim', !document.getElementById('animToggle').checked); }
+function setAccent(el) { document.querySelectorAll('.clr').forEach(c => c.classList.remove('on')); el.classList.add('on'); el.getAttribute('data-a').split(';').filter(Boolean).forEach(pair => { const [k, v] = pair.split(':'); if (k && v) document.documentElement.style.setProperty(k.trim(), v.trim()); }); showToast('Warna aksen diubah', '🎨'); }
+function setLayout(cls) { currentLayout = cls; const gallery = document.getElementById('gallery'); if (gallery) { gallery.classList.remove('grid-2', 'grid-3', 'grid-4'); gallery.classList.add(cls); } document.querySelectorAll('.layout-opt').forEach(opt => { opt.classList.toggle('on', opt.getAttribute('onclick') === `setLayout('${cls}')`); }); showToast('Layout diubah ke ' + cls.replace('grid-', '') + ' kolom', '⊞'); }
+function applySortOrder() { sortOrder = document.getElementById('sortSelect').value; renderGallery(); showToast('Urutan foto diubah', '↕'); }
+function applyWatermark() { document.getElementById('watermarkEl').style.display = document.getElementById('watermarkToggle').checked ? 'block' : 'none'; }
 
 function renderGallery() {
     const gallery = document.getElementById('gallery');
     if (!gallery) return;
-
     let data = [...allPhotos];
     if (myPhotosOnly && activeUser) data = data.filter(p => p.uploader === activeUser.username);
-
     const q = (document.getElementById('searchInput')?.value || '').toLowerCase().trim();
     if (q) data = data.filter(p => p.uploader.toLowerCase().includes(q));
     if (sortOrder === 'asc') data.reverse();
-
     document.getElementById('totalCount').textContent = allPhotos.length;
-    const filteredPill  = document.getElementById('filteredPill');
+    const filteredPill = document.getElementById('filteredPill');
     const filteredCount = document.getElementById('filteredCount');
-    if (data.length !== allPhotos.length || q || myPhotosOnly) {
-        if (filteredPill)  filteredPill.style.display  = 'flex';
-        if (filteredCount) filteredCount.textContent   = data.length;
-    } else {
-        if (filteredPill) filteredPill.style.display = 'none';
-    }
-
-    if (data.length === 0) {
-        gallery.innerHTML = `<div class="empty-wrap"><div class="empty-ico"><i class="fa-solid fa-images"></i></div><h3>Galeri Kosong</h3><p>${q || myPhotosOnly ? 'Tidak ada foto yang cocok.' : 'Belum ada foto yang diunggah.'}</p></div>`;
-        return;
-    }
-
+    if (data.length !== allPhotos.length || q || myPhotosOnly) { if (filteredPill) filteredPill.style.display = 'flex'; if (filteredCount) filteredCount.textContent = data.length; } else { if (filteredPill) filteredPill.style.display = 'none'; }
+    if (data.length === 0) { gallery.innerHTML = `<div class="empty-wrap"><div class="empty-ico"><i class="fa-solid fa-images"></i></div><h3>Galeri Kosong</h3><p>${q || myPhotosOnly ? 'Tidak ada foto yang cocok.' : 'Belum ada foto yang diunggah.'}</p></div>`; return; }
     const canDelete = activeUser && (activeUser.role === 'admin' || activeUser.role === 'dev');
-
-    gallery.innerHTML = data.map((p, i) => `
-        <div class="photo-card" style="animation-delay:${i * 0.04}s">
-            <div class="card-gloss"></div>
-            <div class="card-img">
-                <img src="${p.url}" alt="${p.uploader}" loading="lazy" onerror="this.style.opacity=0.3">
-                <div class="card-actions-overlay">
-                    <div class="card-btns">
-                        <button class="cbtn" onclick="openLightbox('${p.url}','${p.uploader}','${p.time}')">
-                            <i class="fa-solid fa-expand"></i> Lihat
-                        </button>
-                        <button class="cbtn dl" onclick="downloadPhoto('${p.url}','${p.uploader}')">
-                            <i class="fa-solid fa-download"></i> Unduh
-                        </button>
-                        ${canDelete ? `<button class="cbtn rm" onclick="removePhoto('${p.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
-                    </div>
-                </div>
-            </div>
-            <div class="card-meta">
-                <div class="card-uploader">${escapeHtml(p.uploader)}</div>
-                <div class="card-time">${p.time}</div>
-            </div>
-        </div>
-    `).join('');
+    gallery.innerHTML = data.map((p, i) => `<div class="photo-card" style="animation-delay:${i * 0.04}s"><div class="card-gloss"></div><div class="card-img"><img src="${p.url}" alt="${p.uploader}" loading="lazy" onerror="this.style.opacity=0.3"><div class="card-actions-overlay"><div class="card-btns"><button class="cbtn" onclick="openLightbox('${p.url}','${p.uploader}','${p.time}')"><i class="fa-solid fa-expand"></i> Lihat</button><button class="cbtn dl" onclick="downloadPhoto('${p.url}','${p.uploader}')"><i class="fa-solid fa-download"></i> Unduh</button>${canDelete ? `<button class="cbtn rm" onclick="removePhoto('${p.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}</div></div></div><div class="card-meta"><div class="card-uploader">${p.uploader}</div><div class="card-time">${p.time}</div></div></div>`).join('');
 }
 
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
-
-async function uploadPhoto() {
-    const input = document.getElementById('urlInput');
-    const url   = (input?.value || '').trim();
-    if (!url)                    { showToast('URL tidak boleh kosong!', '⚠'); return; }
-    if (!url.startsWith('http')) { showToast('URL tidak valid!', '⚠');        return; }
-    if (!window._fbReady)        { showToast('Koneksi belum siap!', '⚠');     return; }
-
-    try {
-        await window._addDoc(window._col(window._db, 'photos'), {
-            imageUrl:  url,
-            uploader:  activeUser?.username || 'Unknown',
-            createdAt: window._srvTs()
-        });
-        if (input) input.value = '';
-        showToast('Foto berhasil diunggah!', '✓');
-    } catch (err) {
-        showToast('Gagal menyimpan foto!', '✗');
-    }
-}
-
-async function removePhoto(id) {
-    if (!window._fbReady) return;
-    try {
-        await window._delDoc(window._doc(window._db, 'photos', id));
-        showToast('Foto dihapus', '🗑');
-    } catch {
-        showToast('Gagal menghapus foto!', '✗');
-    }
-}
-
+async function uploadPhoto() { const input = document.getElementById('urlInput'); const url = (input?.value || '').trim(); if (!url) { showToast('URL tidak boleh kosong!', '⚠'); return; } if (!url.startsWith('http')) { showToast('URL tidak valid!', '⚠'); return; } if (!window._fbReady) { showToast('Koneksi belum siap!', '⚠'); return; } try { await window._addDoc(window._col(window._db, 'photos'), { imageUrl: url, uploader: activeUser?.username || 'Unknown', createdAt: window._srvTs() }); if (input) input.value = ''; showToast('Foto berhasil diunggah!', '✓'); } catch (err) { showToast('Gagal menyimpan foto!', '✗'); } }
+async function removePhoto(id) { if (!window._fbReady) return; try { await window._delDoc(window._doc(window._db, 'photos', id)); showToast('Foto dihapus', '🗑'); } catch { showToast('Gagal menghapus foto!', '✗'); } }
 function filterGallery() { renderGallery(); }
-
-function toggleMyPhotos() {
-    myPhotosOnly = !myPhotosOnly;
-    document.getElementById('myPhotosBtn')?.classList.toggle('on', myPhotosOnly);
-    renderGallery();
-}
-
-function openLightbox(url, uploader, time) {
-    document.getElementById('lbImg').src = url;
-    document.getElementById('lbInfo').textContent = `${uploader} · ${time}`;
-    document.getElementById('lightbox').classList.add('on');
-}
-function closeLightbox(e) {
-    if (e.target === document.getElementById('lightbox'))
-        document.getElementById('lightbox').classList.remove('on');
-}
-
+function toggleMyPhotos() { myPhotosOnly = !myPhotosOnly; document.getElementById('myPhotosBtn')?.classList.toggle('on', myPhotosOnly); renderGallery(); }
+function openLightbox(url, uploader, time) { document.getElementById('lbImg').src = url; document.getElementById('lbInfo').textContent = `${uploader} · ${time}`; document.getElementById('lightbox').classList.add('on'); }
+function closeLightbox(e) { if (e.target === document.getElementById('lightbox')) document.getElementById('lightbox').classList.remove('on'); }
 
 async function downloadPhoto(url, uploader) {
     try {
@@ -1433,70 +759,33 @@ async function downloadPhoto(url, uploader) {
         document.body.removeChild(a);
         URL.revokeObjectURL(blobUrl);
         showToast('Unduhan dimulai!', '✓');
-    } catch (error) {
-        showToast('Gagal mengunduh foto!', '✗');
-    }
+    } catch (error) { showToast('Gagal mengunduh foto!', '✗'); }
 }
 
 async function downloadAllZip() {
     if (allPhotos.length === 0) { showToast('Tidak ada foto untuk diunduh!', '⚠'); return; }
     if (typeof JSZip === 'undefined') { showToast('Library ZIP belum siap', '⚠'); return; }
-
     showToast('Menyiapkan ZIP...', '📦');
-    const zip    = new JSZip();
+    const zip = new JSZip();
     const folder = zip.folder('p3to_photos');
-
-    const fetches = allPhotos.map(async (p, i) => {
-        try {
-            const res  = await fetch(p.url);
-            const blob = await res.blob();
-            const ext  = blob.type.split('/')[1] || 'jpg';
-            folder.file(`${i+1}_${p.uploader}.${ext}`, blob);
-        } catch { }
-    });
-
+    const fetches = allPhotos.map(async (p, i) => { try { const res = await fetch(p.url); const blob = await res.blob(); const ext = blob.type.split('/')[1] || 'jpg'; folder.file(`${i + 1}_${p.uploader}.${ext}`, blob); } catch { } });
     await Promise.all(fetches);
     const content = await zip.generateAsync({ type: 'blob' });
     saveAs(content, `p3to_archive_${Date.now()}.zip`);
     showToast('ZIP siap diunduh!', '✓');
 }
 
-function togglePw() {
-    const p = document.getElementById('pInput');
-    const e = document.getElementById('eyeBtn');
-    if (!p || !e) return;
-    p.type = p.type === 'password' ? 'text' : 'password';
-    e.className = p.type === 'text' ? 'fa-solid fa-eye-slash pw-toggle' : 'fa-solid fa-eye pw-toggle';
-}
-
+function togglePw() { const p = document.getElementById('pInput'); const e = document.getElementById('eyeBtn'); if (!p || !e) return; p.type = p.type === 'password' ? 'text' : 'password'; e.className = p.type === 'text' ? 'fa-solid fa-eye-slash pw-toggle' : 'fa-solid fa-eye pw-toggle'; }
 function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+window.addEventListener('scroll', () => { const btn = document.getElementById('topBtn'); if (btn) btn.style.display = window.scrollY > 300 ? 'flex' : 'none'; });
 document.addEventListener('DOMContentLoaded', () => {
-    ['tutModal','logoutModal'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-    });
-
-    const uInput   = document.getElementById('uInput');
-    const pInput   = document.getElementById('pInput');
-    const urlInput = document.getElementById('urlInput');
-
-    if (uInput)   uInput.addEventListener('keydown',   e => { if (e.key === 'Enter') pInput?.focus(); });
-    if (pInput)   pInput.addEventListener('keydown',   e => { if (e.key === 'Enter') doLogin(); });
+    ['tutModal', 'logoutModal'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+    const uInput = document.getElementById('uInput'), pInput = document.getElementById('pInput'), urlInput = document.getElementById('urlInput');
+    if (uInput) uInput.addEventListener('keydown', e => { if (e.key === 'Enter') pInput?.focus(); });
+    if (pInput) pInput.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
     if (urlInput) urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') uploadPhoto(); });
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-            closeDrawer();
-            ['tutModal','logoutModal'].forEach(closeModal);
-            document.getElementById('lightbox')?.classList.remove('on');
-        }
-    });
-    
-    window.addEventListener('scroll', () => {
-        const btn = document.getElementById('topBtn');
-        if (btn) btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
-    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeDrawer(); closeModal('tutModal'); closeModal('logoutModal'); document.getElementById('lightbox')?.classList.remove('on'); } });
 });
 </script>
 </body>
