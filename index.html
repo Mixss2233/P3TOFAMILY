@@ -535,7 +535,14 @@
     let blocked = false;
     const overlay = document.getElementById('blocked-overlay');
     const app = document.getElementById('app-container');
-
+    
+    const isMobile = /Android|iPhone|iPad|iPod|iOS|Mobile/i.test(navigator.userAgent) || ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+    
+    if (isMobile) {
+        if (overlay) overlay.style.display = 'none';
+        return;
+    }
+    
     function block() {
         if (blocked) return;
         blocked = true;
@@ -553,26 +560,27 @@
         document.title = 'P3TO ARCHIVE';
         document.body.style.overflow = '';
     }
-
-    function detect() {
+    
+    function detectDevTools() {
         const widthDiff = window.outerWidth - window.innerWidth;
         const heightDiff = window.outerHeight - window.innerHeight;
+        
         if (widthDiff > 200 || heightDiff > 200) {
             block();
-        } else if (blocked) {
+        } else if (blocked && widthDiff < 50 && heightDiff < 50) {
             unblock();
         }
     }
-
-    setInterval(detect, 1000);
-
+    
+    setInterval(detectDevTools, 800);
+    
     document.addEventListener('keydown', function(e) {
         if (e.key === 'F12') { e.preventDefault(); block(); return false; }
         if (e.ctrlKey && e.shiftKey && ['I','J','C','K'].includes(e.key.toUpperCase())) { e.preventDefault(); block(); return false; }
         if (e.ctrlKey && e.key === 'u') { e.preventDefault(); block(); return false; }
         if (e.metaKey && e.altKey && e.key === 'I') { e.preventDefault(); block(); return false; }
     }, true);
-
+    
     document.addEventListener('contextmenu', function(e) { e.preventDefault(); return false; }, true);
     document.addEventListener('dragstart', function(e) { e.preventDefault(); return false; }, true);
 })();
@@ -594,7 +602,7 @@ function generateHWID() {
     return 'P3TO-WEB-' + Math.abs(hash).toString(16).toUpperCase().padStart(12, '0');
 }
 
-const USER_ROLES = { admin: ["PETOADMIN"], dev: ["M1XO", "tya"], member: ["P3TO"] };
+const USER_ROLES = { admin: ["PETOADMIN"], dev: ["MIXO", "tya"], member: ["P3TO"] };
 function getUserRole(username) {
     if (USER_ROLES.admin.includes(username)) return "admin";
     if (USER_ROLES.dev.includes(username)) return "dev";
