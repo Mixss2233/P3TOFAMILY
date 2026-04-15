@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>P3TO ARCHIVE</title>
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/711/711769.png">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
@@ -13,195 +14,351 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
     <style>
-        :root {
-            --accent: #ff8c00;
-            --bg: #020617;
-            --card: rgba(255, 255, 255, 0.05);
-            --text: #ffffff;
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
+            /* Update di bagian paling atas <style> */
+            :root {
+                --accent: #ff8c00;
+                --bg: #050810;
+                --card: rgba(255, 255, 255, 0.03);
+                --text: #ffffff;             /* Putih di Dark Mode */
+                --text-muted: rgba(255,255,255,0.6);
+                --glass-border: rgba(255, 255, 255, 0.08);
+            }
 
-        [data-theme="light"] {
-            --bg: #f1f5f9;
-            --card: rgba(255, 255, 255, 0.7);
-            --text: #0f172a;
-            --glass-border: rgba(0, 0, 0, 0.05);
-        }
+            [data-theme="light"] {
+                --bg: #000000;
+                --card: rgba(56, 54, 54, 0.9);
+                --text: #ffffff;             /* Hitam di Light Mode */
+                --text-muted: rgb(255, 255, 255);
+                --glass-border: rgb(255, 255, 255);
+            }
+
+            /* Tambahkan ini di bawah variabel CSS tadi agar semua tulisan ikut berubah */
+            body, h1, h2, h3, h4, p, span, div, i {
+                color: var(--text);
+                transition: color 0.3s ease, background 0.3s ease;
+            }
+
+            /* Pengecualian: Tombol utama teksnya harus tetap putih/terang */
+            .btn-main, .btn-main i {
+                color: #ffffff !important;
+            }
+
+            /* Perbaikan untuk Input agar teksnya kontras */
+            .login-input {
+                color: var(--text) !important;
+                background: var(--card);
+            }
 
         * { 
             margin: 0; padding: 0; box-sizing: border-box; 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            transition: background 0.4s ease, color 0.4s ease; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
         }
 
         html, body {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            background: var(--bg);
-            color: var(--text);
-            touch-action: manipulation;
+            width: 100%; height: 100%;
+            overflow-x: hidden; background: var(--bg);
+            color: var(--text); touch-action: manipulation;
         }
 
         /* --- ANIMATIONS --- */
-        @keyframes floatLogin { 
-            0%, 100% { transform: translateY(0px); } 
-            50% { transform: translateY(-15px); } 
-        }
-        @keyframes popIn { 
-            0% { opacity: 0; transform: translateY(30px) scale(0.95); } 
-            100% { opacity: 1; transform: translateY(0) scale(1); } 
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes iconBounce { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.1); } }
+        @keyframes meshMove { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
         }
 
-        .bg-animate { position: fixed; inset: 0; z-index: -2; background: linear-gradient(45deg, #020617, #0f172a, #020617); background-size: 400% 400%; animation: gradientBG 15s ease infinite; }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        
-        .orb { position: absolute; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15; }
-        .orb-1 { width: 400px; height: 400px; background: var(--accent); top: -10%; left: -10%; }
+        /* --- BACKGROUND MESH --- */
+        .mesh-bg {
+            position: fixed; inset: 0; z-index: -2;
+            background: linear-gradient(-45deg, #050810, #111827, #050810, #1e1b4b);
+            background-size: 400% 400%;
+            animation: meshMove 15s ease infinite;
+        }
+
+        .orb {
+            position: absolute; width: 600px; height: 600px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            filter: blur(80px); opacity: 0.1; z-index: -1; top: -200px; left: -200px;
+        }
 
         /* --- LOGIN SECTION --- */
-        #login-section { height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .login-glass { 
-            background: var(--card); 
-            backdrop-filter: blur(30px); 
-            border: 1px solid var(--glass-border); 
-            padding: 40px; 
-            border-radius: 40px; 
-            width: min(400px, 100%); 
-            text-align: center; 
-            animation: floatLogin 5s ease-in-out infinite; 
+        #login-section { 
+            height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;
+        }
+        .login-card {
+            background: var(--card); backdrop-filter: blur(40px);
+            border: 1px solid var(--glass-border); padding: 50px 30px;
+            border-radius: 40px; width: min(420px, 100%);
+            text-align: center; box-shadow: 0 25px 50px -12px var(--shadow);
+            animation: animate__fadeInDown 1s;
         }
 
-        /* FIX: Font 16px agar tidak auto-zoom di HP */
-        .login-input { 
-            width: 100%; padding: 16px; background: rgba(0,0,0,0.2); 
-            border: 1px solid var(--glass-border); border-radius: 15px; 
-            color: var(--text); text-align: center; margin: 20px 0; 
-            outline: none; font-size: 16px !important; 
+        .login-input {
+            width: 100%; padding: 18px; background: rgba(0,0,0,0.2);
+            border: 1px solid var(--glass-border); border-radius: 20px;
+            color: var(--text); text-align: center; margin: 25px 0;
+            font-size: 16px !important; outline: none;
         }
+        .login-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--accent); }
 
-        .btn-neon { 
-            background: var(--accent); color: white; border: none; padding: 14px 28px; 
-            border-radius: 20px; font-weight: 800; cursor: pointer; transition: all 0.3s;
+        .btn-main {
+            width: 100%; padding: 16px; border-radius: 20px; border: none;
+            background: var(--accent); color: white; font-weight: 800;
+            font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .btn-neon:hover { transform: scale(1.05); box-shadow: 0 10px 20px var(--accent); }
+            /* Efek Glow di sekitar tombol saat Hover */
+            .btn-main:hover {
+                transform: translateY(-3px);
+                filter: brightness(1.2);
+                /* Menggunakan Box Shadow dengan Blur tinggi agar terlihat seperti cahaya (Glow) */
+                box-shadow: 0 0 15px var(--accent), 0 0 30px rgba(255, 140, 0, 0.3);
+                transition: all 0.3s ease;
+            }
+            /* Efek Glow Khusus Tombol Hapus (Trash) */
+                .btn-delete-asset {
+                    transition: all 0.3s ease !important;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .btn-delete-asset:hover {
+                    transform: scale(1.1) rotate(5deg); /* Membesar sedikit & miring unik */
+                    background: rgba(239, 68, 68, 0.2) !important; /* Latar belakang merah tipis */
+                    color: #ff4d4d !important; /* Warna ikon lebih terang */
+                    filter: brightness(1.2);
+                    /* Efek Glow Merah */
+                    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5), 0 0 30px rgba(239, 68, 68, 0.2);
+                }
+
+                .btn-delete-asset:active {
+                    transform: scale(0.9);
+                }
 
         /* --- DASHBOARD --- */
-        #main-dashboard { display: none; padding: 20px 5%; max-width: 1400px; margin: 0 auto; animation: popIn 0.8s ease-out; }
-        
-        /* FIX: Navigasi agar tidak menimpa konten */
-        .nav-glass { 
-            background: var(--card); backdrop-filter: blur(20px); 
-            border: 1px solid var(--glass-border); padding: 20px; 
-            border-radius: 25px; display: flex; justify-content: space-between; 
-            align-items: center; margin-bottom: 30px; position: relative; z-index: 100;
+        #main-dashboard { display: none; padding: 40px 5%; max-width: 1400px; margin: 0 auto; animation: animate__fadeIn 1s; }
+
+        .header-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 30px; background: var(--card); backdrop-filter: blur(20px);
+            border-radius: 30px; border: 1px solid var(--glass-border);
+            margin-bottom: 40px;
         }
 
-        .gallery { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 25px; padding-bottom: 120px; 
+        .upload-area {
+            background: var(--card); padding: 20px; border-radius: 30px;
+            border: 2px dashed var(--glass-border); margin-bottom: 40px;
+            display: flex; gap: 15px; align-items: center;
         }
 
-        .card { 
-            background: var(--card); border-radius: 25px; padding: 15px; 
-            border: 1px solid var(--glass-border); transition: 0.4s;
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px; padding-bottom: 150px;
         }
-        .card img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 18px; }
 
-        /* --- SETTINGS DRAWER --- */
-        .settings-drawer { 
-            position: fixed; right: -100%; top: 0; width: 300px; height: 100%; 
-            background: var(--bg); border-left: 1px solid var(--glass-border); 
-            z-index: 2001; padding: 40px 20px; transition: 0.5s; 
+        .bento-card {
+            background: var(--card); border-radius: 35px; padding: 15px;
+            border: 1px solid var(--glass-border); overflow: hidden;
+            position: relative;
         }
-        .settings-drawer.active { right: 0; }
+        .bento-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+
+        .bento-card img {
+            width: 100%; aspect-ratio: 1/1; object-fit: cover;
+            border-radius: 25px; margin-bottom: 15px;
+        }
+
+        /* --- SETTINGS --- */
+        .settings-panel {
+            position: fixed; right: -350px; top: 0; width: 320px; height: 100%;
+            background: var(--bg); border-left: 1px solid var(--glass-border);
+            z-index: 2000; padding: 50px 25px; box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+        .settings-panel.active { right: 0; }
+
+        .color-palette { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
+        .color-option { height: 45px; border-radius: 15px; cursor: pointer; border: 3px solid transparent; }
+        .color-option:hover { transform: scale(1.1); }
+        .color-option.active { border-color: white; }
 
         /* --- FLOATING HUB --- */
-        .floating-hub { position: fixed; right: 25px; bottom: 25px; display: flex; gap: 12px; z-index: 1000; }
-        .float-btn { 
-            width: 55px; height: 55px; border-radius: 18px; background: var(--card); 
-            backdrop-filter: blur(10px); border: 1px solid var(--glass-border); 
-            color: var(--text); display: flex; align-items: center; justify-content: center; 
-            font-size: 1.3rem; cursor: pointer; 
+        .hub-container { position: fixed; right: 30px; bottom: 30px; display: flex; gap: 15px; z-index: 1500; }
+        .hub-btn {
+            width: 60px; height: 60px; border-radius: 22px; 
+            background: var(--card); border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px); color: var(--text);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; cursor: pointer;
+            animation: iconBounce 3s ease-in-out infinite;
         }
+        .hub-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .hub-btn:nth-child(2) { animation-delay: 1.5s; }
 
-        /* --- RESPONSIVE MOBILE FIX --- */
+        /* --- MOBILE FIXES --- */
         @media (max-width: 768px) {
-            .nav-glass { flex-direction: column; gap: 15px; text-align: center; }
-            .nav-glass div:last-child { display: flex; width: 100%; gap: 10px; }
-            .nav-glass button { flex: 1; font-size: 0.8rem; padding: 10px; }
-            .gallery { grid-template-columns: 1fr; }
-            .floating-hub { left: 50%; right: auto; transform: translateX(-50%); width: fit-content; bottom: 20px; }
-            .login-glass { width: 90%; }
+            .header-nav { flex-direction: column; gap: 20px; text-align: center; }
+            .upload-area { flex-direction: column; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .hub-container { left: 50%; right: auto; transform: translateX(-50%); }
+            .login-card { width: 92%; }
         }
 
-        #tutorialModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 3000; align-items: center; justify-content: center; padding: 20px; }
-        .modal-content { background: var(--bg); padding: 30px; border-radius: 30px; border: 1px solid var(--glass-border); max-width: 400px; }
+        #tutorialModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; padding: 20px; }
+        .modal-box { background: var(--bg); padding: 40px; border-radius: 40px; border: 1px solid var(--glass-border); max-width: 450px; text-align: center; }
+
+        /* --- AREA MODIFIKASI TOGGLE --- */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card);
+    padding: 15px 20px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+    margin-bottom: 40px;
+}
+
+/* Ukuran Wadah Toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 54px; 
+    height: 28px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+/* Latar Belakang Slide */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255,255,255,0.1); /* Warna saat OFF */
+    transition: .4s;
+    border-radius: 34px;
+}
+
+/* Bulatan Tombol */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* Warna saat ON (Mengikuti Accent) */
+input:checked + .slider { background-color: var(--accent); }
+
+/* Jarak Geser */
+input:checked + .slider:before { transform: translateX(26px); }
+
     </style>
 </head>
 <body data-theme="dark">
 
-    <div class="bg-animate"></div>
-    <div class="orb orb-1"></div>
+    <div class="mesh-bg"></div>
+    <div class="orb"></div>
 
-    <div class="settings-drawer" id="settingsDrawer">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-            <h2 style="font-weight: 800;">SETTINGS</h2>
-            <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleSettings()"></i>
-        </div>
-        <p style="font-size: 0.7rem; opacity: 0.5; margin-bottom: 10px;">GANTI TEMA</p>
-        <button class="btn-neon" style="width:100%; margin-bottom: 20px;" onclick="handleThemeSwitch()">SWITCH THEME</button>
+<aside class="settings-panel" id="settingsPanel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+        <h2 style="font-weight: 800; letter-spacing: -1px;">PREFERENCE</h2>
+        <i class="fa-solid fa-circle-xmark" style="cursor:pointer; font-size: 1.5rem; opacity: 0.5;" onclick="toggleSettings()"></i>
     </div>
 
-    <div class="floating-hub">
-        <a href="https://discord.com/invite/aarURee5bH" target="_blank" class="float-btn"><i class="fa-brands fa-discord"></i></a>
-        <button class="float-btn" onclick="toggleSettings()"><i class="fa-solid fa-gear"></i></button>
+    <p style="font-size: 0.75rem; font-weight: 700; opacity: 0.4; margin-bottom: 15px; text-transform: uppercase;">Aesthetic Mode</p>
+    
+    <div class="theme-switch-wrapper">
+        <span style="font-size: 0.9rem; font-weight: 600;" id="themeLabel"><i class="fa-solid fa-moon"></i> Dark Mode</span>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle" onclick="handleThemeSwitch()" checked>
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <p style="font-size: 0.75rem; font-weight: 700; opacity: 0.4; margin-bottom: 15px; text-transform: uppercase;">Accent Color</p>
+    <div class="color-palette">
+        <div class="color-option" style="background: #ff8c00;" onclick="setAccent('#ff8c00')"></div>
+        <div class="color-option" style="background: #3b82f6;" onclick="setAccent('#3b82f6')"></div>
+        <div class="color-option" style="background: #8b5cf6;" onclick="setAccent('#8b5cf6')"></div>
+        <div class="color-option" style="background: #10b981;" onclick="setAccent('#10b981')"></div>
+        <div class="color-option" style="background: #f43f5e;" onclick="setAccent('#f43f5e')"></div>
+        <div class="color-option" style="background: #f59e0b;" onclick="setAccent('#f59e0b')"></div>
+    </div>
+</aside>
+
+    <div class="hub-container">
+        <a href="https://discord.com/invite/aarURee5bH" target="_blank" class="hub-btn"><i class="fa-brands fa-discord"></i></a>
+        <button class="hub-btn" onclick="toggleSettings()"><i class="fa-solid fa-sliders"></i></button>
     </div>
 
     <section id="login-section">
-        <div class="login-glass">
-            <h1 style="font-size: 2.5rem; font-weight: 900;">P3TO<span style="color:var(--accent);">.</span></h1>
-            <input type="password" id="idInput" class="login-input" placeholder="ENTER PASSKEY">
-            <button class="btn-neon" style="width: 100%;" onclick="handleLogin()">LOGIN</button>
+        <div class="login-card">
+            <div style="width: 70px; height: 70px; background: var(--accent); border-radius: 20px; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px var(--accent);">
+                <i class="fa-solid fa-vault" style="color: white; font-size: 2rem;"></i>
+            </div>
+            <h1 style="font-size: 2.2rem; font-weight: 800; letter-spacing: -1.5px;">P3TO ARCHIVE</h1>
+            <p style="opacity: 0.5; font-size: 0.9rem; margin-top: 5px;">Secure Digital Asset Vault</p>
+            
+            <input type="password" id="idInput" class="login-input" placeholder="••••••••">
+            <button class="btn-main" onclick="handleLogin()">ACCESS VAULT <i class="fa-solid fa-arrow-right-long"></i></button>
         </div>
     </section>
 
     <main id="main-dashboard">
-        <nav class="nav-glass">
-            <div id="greeting" style="font-weight: 800;"></div>
-            <div style="display:flex; gap:10px;">
-                <button id="tutorialBtn" class="btn-neon" style="background:rgba(255,255,255,0.05); display:none;" onclick="toggleTutorial()">PANDUAN</button>
-                <button class="btn-neon" style="background:#ef4444;" onclick="location.reload()">LOGOUT</button>
+        <header class="header-nav">
+            <div>
+                <p style="font-size: 0.8rem; opacity: 0.5; font-weight: 600;">LOGGED IN AS</p>
+                <h2 id="greeting" style="font-weight: 800; color: var(--accent);">...</h2>
             </div>
-        </nav>
+            <div style="display: flex; gap: 12px;">
+                <button id="tutorialBtn" class="btn-main" style="background: var(--card); border: 1px solid var(--glass-border); padding: 12px 20px; display: none;" onclick="toggleTutorial()">Tutorial</button>
+                <button class="btn-main" style="background: #ef4444; padding: 12px 20px;" onclick="location.reload()">Logout</button>
+            </div>
+        </header>
 
-        <div id="uploadBox" style="display:none; background:var(--card); padding:15px; border-radius:20px; border: 1px solid var(--glass-border); margin-bottom:20px; display:flex; gap:10px;">
-            <input type="text" id="imgUrl" class="login-input" style="margin:0; text-align:left; background:transparent; border:none;" placeholder="Link Gambar HD...">
-            <button class="btn-neon" id="uploadBtn">UNGGAH</button>
+        <div id="uploadBox" class="upload-area" style="display: none;">
+            <i class="fa-solid fa-link" style="opacity: 0.3; margin-left: 10px;"></i>
+            <input type="text" id="imgUrl" class="login-input" style="margin:0; text-align:left; background:transparent; border:none;" placeholder="Paste Direct Image URL (akhiran .jpg/.png) di sini">
+            <button class="btn-main" id="uploadBtn" style="width: auto;">UPLOAD</button>
         </div>
 
-        <div style="text-align: center; margin-bottom: 30px;">
-            <button class="btn-neon" style="background: transparent; border: 1px solid var(--glass-border);" onclick="downloadAllZip()" id="zipBtn">
-                <i class="fa-solid fa-box-archive"></i> DOWNLOAD SEMUA (.ZIP)
+        <div style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="font-weight: 800; font-size: 1.5rem;">Archive P3TO</h3>
+            <button class="btn-main" style="background: transparent; border: 1px solid var(--accent); width: auto;" onclick="downloadAllZip()" id="zipBtn">
+                <i class="fa-solid fa-file-zipper"></i> DOWNLOAD ALL (.ZIP)
             </button>
         </div>
 
-        <div class="gallery" id="gallery"></div>
+        <div class="gallery-grid" id="gallery">
+            </div>
     </main>
 
     <div id="tutorialModal" onclick="toggleTutorial()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <h3 style="color:var(--accent); margin-bottom:15px;">Cara Upload</h3>
-            <p style="font-size: 0.9rem; line-height: 1.6; opacity: 0.8;">
-                1. Upload foto ke Postimages.<br>
-                2. Ambil "Direct Link" (akhiran .jpg/.png).<br>
-                3. Paste di kotak unggah dashboard ini.
-            </p>
-            <button class="btn-neon" style="width:100%; margin-top:20px;" onclick="toggleTutorial()">OKE</button>
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <i class="fa-solid fa-circle-info" style="font-size: 3rem; color: var(--accent); margin-bottom: 20px;"></i>
+            <h2 style="font-weight: 800; margin-bottom: 15px;">Cara Upload Gambar</h2>
+                <p style="opacity: 0.6; font-size: 0.95rem; text-align: left;">
+                    <span style="display:block; margin-bottom:8px;">1. Buka imagikit.io</span>
+                    <span style="display:block; margin-bottom:8px;">2. Daftar / masuk pakai Google</span>
+                    <span style="display:block; margin-bottom:8px;">3. Masuk ke Image Library</span>
+                    <span style="display:block; margin-bottom:8px;">4. Klik New → Upload File → My Device</span>
+                    <span style="display:block; margin-bottom:8px;">5. Pilih dan upload gambar</span>
+                    <span style="display:block;">6. Copy URL gambar & paste di dashboard</span>
+                </p>
+            <button class="btn-main" style="margin-top: 30px;" onclick="toggleTutorial()">MENGERTI</button>
         </div>
     </div>
 
     <script type="module">
+        // --- KEEP ORIGINAL FIREBASE LOGIC ---
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
@@ -218,93 +375,147 @@
         const db = getFirestore(app);
 
         const USERS = {
-            "Mizael2784": { name: "Mixo", role: "DEV", msg: "Halo Tuan Muda Mixo" },
-            "PEGASUS_GOAT": { name: "PEGASUS", role: "ADMIN", msg: "Halo Abdan Brebes" },
+            "Mizael2784": { name: "KING MIXO", role: "DEV", msg: "Welcome, Master Mixo" },
+            "PEGASUS_GOAT": { name: "PEGASUS", role: "ADMIN", msg: "Halo Tuan Pegasus" },
             "SENJU33": { name: "Senju", role: "ADMIN", msg: "Halo Tuan Senju" },
             "BersamaP3TO": { name: "Sahabat", role: "MEMBER", msg: "Halo Sahabat P3TO" }
         };
 
         let activeUser = null;
 
-        window.toggleSettings = () => document.getElementById('settingsDrawer').classList.toggle('active');
+        // UI Helpers
+        window.toggleSettings = () => document.getElementById('settingsPanel').classList.toggle('active');
         window.toggleTutorial = () => { const m = document.getElementById('tutorialModal'); m.style.display = m.style.display === 'flex' ? 'none' : 'flex'; };
-        window.handleThemeSwitch = () => {
-            const body = document.body;
-            const current = body.getAttribute('data-theme');
-            body.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        
+            window.handleThemeSwitch = () => {
+                const body = document.body;
+                const toggle = document.getElementById('themeToggle');
+                const label = document.getElementById('themeLabel');
+                
+                if (toggle.checked) {
+                    body.setAttribute('data-theme', 'dark');
+                    label.innerHTML = '<i class="fa-solid fa-moon"></i> Default Mode';
+                    // Memberikan instruksi warna manual jika CSS global terlewat
+                    label.style.color = 'var(--text)';
+                } else {
+                    body.setAttribute('data-theme', 'light');
+                    label.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
+                    label.style.color = 'var(--text)';
+                }
+            };
+
+        window.setAccent = (color) => {
+            document.documentElement.style.setProperty('--accent', color);
+            document.querySelector('.orb').style.background = `radial-gradient(circle, ${color} 0%, transparent 70%)`;
         };
 
         window.handleLogin = () => {
             const key = document.getElementById('idInput').value;
             if(USERS[key]) {
                 activeUser = USERS[key];
-                document.getElementById('login-section').style.display = 'none';
-                document.getElementById('main-dashboard').style.display = 'block';
-                document.getElementById('greeting').innerText = activeUser.msg;
-                
-                if(activeUser.role !== 'MEMBER') {
-                    document.getElementById('uploadBox').style.display = 'flex';
-                    document.getElementById('tutorialBtn').style.display = 'block';
-                }
-                loadGallery();
-            } else { alert("Passkey Salah!"); }
+                document.getElementById('login-section').classList.add('animate__animated', 'animate__fadeOut');
+                setTimeout(() => {
+                    document.getElementById('login-section').style.display = 'none';
+                    document.getElementById('main-dashboard').style.display = 'block';
+                    document.getElementById('greeting').innerText = activeUser.msg;
+                    if(activeUser.role !== 'MEMBER') {
+                        document.getElementById('uploadBox').style.display = 'flex';
+                        document.getElementById('tutorialBtn').style.display = 'block';
+                    }
+                    loadGallery();
+                }, 500);
+            } else { alert("Passkey Invalid!"); }
         };
 
-        function loadGallery() {
-            const q = query(collection(db, "photos"), orderBy("createdAt", "desc"));
-            onSnapshot(q, (snap) => {
-                const gallery = document.getElementById('gallery'); gallery.innerHTML = "";
-                snap.forEach(d => {
-                    const data = d.data();
-                    const card = document.createElement('div');
-                    card.className = 'card animate__animated animate__fadeInUp';
-                    card.innerHTML = `
-                        <img src="${data.imageUrl}" alt="P3TO">
-                        <div style="margin-top:12px;">
-                            <p style="font-size:0.7rem; color:var(--accent); font-weight:800;">${data.uploader || 'SYSTEM'}</p>
-                            <div style="display:flex; gap:8px; margin-top:10px;">
-                                <button class="btn-neon" style="flex:1; padding:8px; font-size:0.7rem; background:#10b981;" onclick="window.downloadImg('${data.imageUrl}')">DOWNLOAD</button>
-                                ${activeUser.role === 'DEV' ? `<button onclick="window.delImg('${d.id}')" style="background:rgba(239,68,68,0.1); border:none; color:#ef4444; width:35px; border-radius:10px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>` : ''}
+            function loadGallery() {
+                const q = query(collection(db, "photos"), orderBy("createdAt", "desc"));
+                onSnapshot(q, (snap) => {
+                    const gallery = document.getElementById('gallery'); gallery.innerHTML = "";
+                    snap.forEach(d => {
+                        const data = d.data();
+                        
+                        // Format Tanggal dan Jam
+                        const date = data.createdAt ? data.createdAt.toDate() : new Date();
+                        const formattedDate = date.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
+                        const formattedTime = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+
+                        const card = document.createElement('div');
+                        card.className = 'bento-card animate__animated animate__fadeInUp';
+                        card.innerHTML = `
+                            <img src="${data.imageUrl}" alt="P3TO Asset" loading="lazy">
+                            <div style="padding: 5px;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                                    <span style="font-size:0.75rem; font-weight:800; color:var(--accent); text-transform: uppercase;">
+                                        <i class="fa-solid fa-user-shield" style="font-size:0.6rem;"></i> ${data.uploader || 'SYSTEM'}
+                                    </span>
+                                </div>
+                                
+                                <div style="margin-bottom:15px; font-size:0.65rem; opacity:0.6; display:flex; gap:8px;">
+                                    <span><i class="fa-regular fa-calendar"></i> ${formattedDate}</span>
+                                    <span><i class="fa-regular fa-clock"></i> ${formattedTime}</span>
+                                </div>
+
+                                <div style="display:flex; gap:10px;">
+                                    <button class="btn-main" style="flex:1; padding:10px; font-size:0.75rem; background:#10b981;" onclick="window.downloadImg('${data.imageUrl}')">
+                                        <i class="fa-solid fa-download"></i>
+                                    </button>
+                                    ${activeUser.role === 'DEV' ? 
+    `<button onclick="window.delImg('${d.id}')" 
+             class="btn-delete-asset" 
+             style="background:rgba(239,68,68,0.1); border:none; color:#ef4444; width:45px; height:45px; border-radius:15px; cursor:pointer;">
+        <i class="fa-solid fa-trash-can"></i>
+    </button>` 
+: ''}
+                                </div>
                             </div>
-                        </div>
-                    `;
-                    gallery.appendChild(card);
+                        `;
+                        gallery.appendChild(card);
+                    });
                 });
-            });
-        }
+            }
 
-        document.getElementById('uploadBtn').onclick = async () => {
-            const url = document.getElementById('imgUrl').value;
-            if(!url.includes('http')) return alert("Link tidak valid!");
-            await addDoc(collection(db, "photos"), { imageUrl: url, uploader: activeUser.name, createdAt: serverTimestamp() });
-            document.getElementById('imgUrl').value = "";
-        };
+            document.getElementById('uploadBtn').onclick = async () => {
+                const url = document.getElementById('imgUrl').value;
+                if(!url.includes('http')) return alert("Enter valid URL!");
+                
+                try {
+                    await addDoc(collection(db, "photos"), { 
+                        imageUrl: url, 
+                        uploader: activeUser.name, 
+                        createdAt: serverTimestamp() // Ini akan mengambil waktu dari server Firebase
+                    });
+                    document.getElementById('imgUrl').value = "";
+                } catch(e) { 
+                    alert("Upload Failed!"); 
+                }
+            };
 
         window.downloadImg = async (url) => {
             try {
                 const res = await fetch(url);
                 const blob = await res.blob();
-                saveAs(blob, "P3TO-" + Date.now() + ".jpg");
+                saveAs(blob, "P3TO-ASSET-" + Date.now() + ".jpg");
             } catch (e) { window.open(url, '_blank'); }
         };
 
-        window.delImg = async (id) => { if(confirm("Hapus?")) await deleteDoc(doc(db, "photos", id)); };
+        window.delImg = async (id) => { if(confirm("Permanently delete this asset?")) await deleteDoc(doc(db, "photos", id)); };
 
         window.downloadAllZip = async () => {
             const zip = new JSZip(); const btn = document.getElementById('zipBtn');
-            const imgs = document.querySelectorAll('.card img');
-            if(imgs.length === 0) return alert("Kosong!");
-            btn.innerText = "PROSES...";
+            const imgs = document.querySelectorAll('.bento-card img');
+            if(imgs.length === 0) return alert("No assets to download!");
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> COMPRESSING...';
             for(let i=0; i<imgs.length; i++) {
                 try {
                     const res = await fetch(imgs[i].src);
                     const blob = await res.blob();
-                    zip.file(`asset-${i+1}.jpg`, blob);
+                    zip.file(`P3TO_Asset_${i+1}.jpg`, blob);
                 } catch(e) {}
             }
             zip.generateAsync({type:"blob"}).then(b => {
-                saveAs(b, "P3TO-ALL.zip");
-                btn.innerHTML = '<i class="fa-solid fa-box-archive"></i> DOWNLOAD SEMUA (.ZIP)';
+                saveAs(b, "P3TO-ARCHIVE-FULL.zip");
+                btn.innerHTML = '<i class="fa-solid fa-file-zipper"></i> DOWNLOAD ALL (.ZIP)';
             });
         };
     </script>
